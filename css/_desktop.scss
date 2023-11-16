@@ -1,0 +1,53 @@
+/* 
+----------------------------------------------------
+----------------------- header ---------------------
+----------------------------------------------------
+ */
+
+.navbar {
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+
+    .heading {
+        font-size: 2.6rem;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+        width: 50%;
+        right: 0;
+        top: 0px;
+        left: auto;
+        gap: 60px;
+
+        .nav-item {
+            bottom: 0;
+            list-style: none;
+            font-size: 1.5rem;
+            position: relative;
+            right: 30px;
+
+            .nav-link {
+                transition: 0.5s ease;
+                color: white;
+                text-decoration: none;
+            }
+            
+            .nav-link:hover {
+                color: rgb(184, 175, 168);
+            }
+        }
+    }
+
+    .burger-menu {
+        display: none;
+        cursor: pointer;
+    }
+}

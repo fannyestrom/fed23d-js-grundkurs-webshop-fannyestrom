@@ -1,0 +1,19 @@
+@import 'vendor/normalize';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@import 'mobile';
+
+
+@media screen and (min-width: 768px) {
+  @import 'tablet';
+}
+
+
+@media(min-width: 1024px) {
+  @import 'desktop';
+}
