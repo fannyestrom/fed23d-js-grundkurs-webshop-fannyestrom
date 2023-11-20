@@ -90,9 +90,16 @@ const products = [
 
 ];
 
+
+// increase & decrease buttons
+
 const container = document.querySelector('#products');
 
-for (let i = 0; i < 10; i++) {
-    console.log(i);
-    container.innerHTML += `<div>${products[i].name}</div>`;
+for (let i = 0; i < products.length; i++) {
+    container.innerHTML += 
+    `<div id="donut-${i}">
+    <button class="decrease" id="decrease-${i}">-</button>
+    ${products[i].name}
+    <button class="increase" id="increase-${i}">+</button>
+    </div>`;
 }
