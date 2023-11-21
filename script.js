@@ -20,15 +20,21 @@ addEventListener('click', () => {
 const products = [
     {
         name: 'Cannoli',
-        price: '25 kr',
+        price: 25,
         rating: '3.7',
         category: '',
         amount: 0,
+        img: {
+            src: '',
+            alt: '',
+            width: 200,
+            height: 200,
+        }
     },
 
     {
         name: 'Carrot Cake',
-        price: '40 kr',
+        price: 40,
         rating: '4.9',
         category: '',
         amount: 0,
@@ -36,7 +42,7 @@ const products = [
 
     {
         name: 'Cheesecake',
-        price: '40 kr',
+        price: 40,
         rating: '4.3',
         category: '',
         amount: 0,
@@ -44,7 +50,7 @@ const products = [
 
     {
         name: 'Chocolate Chip Cookie',
-        price: '30 kr',
+        price: 30,
         rating: '4.5',
         category: '',
         amount: 0,
@@ -52,7 +58,7 @@ const products = [
 
     {
         name: 'Chocolate Glazed Brownie',
-        price: '40 kr',
+        price: 40,
         rating: '4.8',
         category: '',
         amount: 0,
@@ -60,7 +66,7 @@ const products = [
 
     {
         name: 'Churros',
-        price: '45 kr',
+        price: 45,
         rating: '5.0',
         category: '',
         amount: 0,
@@ -68,7 +74,7 @@ const products = [
     
     {
         name: 'Cinnamon Roll',
-        price: '35 kr',
+        price: 35,
         rating: '4.9',
         category: '',
         amount: 0,
@@ -76,7 +82,7 @@ const products = [
 
     {
         name: 'Crêpes',
-        price: '45 kr',
+        price: 45,
         rating: '4.5',
         category: '',
         amount: 0,
@@ -84,7 +90,7 @@ const products = [
 
     {
         name: 'Croissant',
-        price: '30 kr',
+        price: 30,
         rating: '4.0',
         category: '',
         amount: 0,
@@ -92,7 +98,7 @@ const products = [
 
     {
         name: 'Cupcake',
-        price: '35 kr',
+        price: 35,
         rating: '3.9',
         category: '',
         amount: 0,
