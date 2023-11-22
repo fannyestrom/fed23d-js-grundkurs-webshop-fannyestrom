@@ -25,10 +25,24 @@ const products = [
         category: '',
         amount: 0,
         img: {
-            src: '',
-            alt: '',
-            width: 200,
-            height: 200,
+            src: 'images/cannoli.png',
+            width: 100,
+            height: 100,
+            alt: 'Cannoli'
+        }
+    },
+
+    {
+        name: 'Caramel Cheesecake',
+        price: 40,
+        rating: '4.3',
+        category: '',
+        amount: 0,
+        img: {
+            src: 'images/caramel cheesecake.png',
+            width: 100,
+            height: 100,
+            alt: 'Caramel cheesecake'
         }
     },
 
@@ -38,14 +52,12 @@ const products = [
         rating: '4.9',
         category: '',
         amount: 0,
-    },
-
-    {
-        name: 'Cheesecake',
-        price: 40,
-        rating: '4.3',
-        category: '',
-        amount: 0,
+        img: {
+            src: 'images/carrot cake.png',
+            width: 100,
+            height: 100,
+            alt: 'Carrot cake'
+        }
     },
 
     {
@@ -54,6 +66,12 @@ const products = [
         rating: '4.5',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/chocolate chip cookie.png',
+            width: 100,
+            height: 100,
+            alt: 'Chocolate chip cookie'
+        }
     },
 
     {
@@ -62,6 +80,12 @@ const products = [
         rating: '4.8',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/chocolate glazed brownie.png',
+            width: 100,
+            height: 100,
+            alt: 'chocolate glazed brownie'
+        }
     },
 
     {
@@ -70,6 +94,13 @@ const products = [
         rating: '5.0',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/churros.png',
+            width: 100,
+            height: 100,
+            alt: 'Churros'
+        }
+        
     },
     
     {
@@ -78,6 +109,12 @@ const products = [
         rating: '4.9',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/cinnamon roll.png',
+            width: 100,
+            height: 100,
+            alt: 'Cinnamon roll'
+        }
     },
 
     {
@@ -106,49 +143,17 @@ const products = [
 
 ];
 
+// product images
 
-// increase & decrease buttons
+const container = document.querySelector('#container');
 
-const container = document.querySelector('#products');
+products.forEach(product => {
+    container.innerHTML += `
+    <article>
+        <h2>${product.name}</h2>
+        <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
+    </article>
+    `;
+});
 
-for (let i = 0; i < products.length; i++) {
-    container.innerHTML += 
-    `<div id="donut-${i}">
-    <button class="decrease" id="decrease-${i}">-</button>
-    <strong>${products[i].name}</strong>
-    Amount: ${products[i].amount}
-    Price: ${products[i].price}:-
-    <button class="increase" id="increase-${i}">+</button>
-    </div>`;
-}
 
-const increaseButtons = Array.from(document.querySelectorAll('.increase'));
-for (let i = 0; i < increaseButtons.length; i++) {
-    increaseButtons[i].addEventListener('click', increaseAmount);
-}
-
-function increaseAmount(e) {
-    // console.log('increase', e.target.id.replace('increase-', ''));
-    const index = e.target.id.replace('increase-', '');
-    // console.log(products[index]);
-
-    products[index].amount += 1;
-
-    container.innerHTML = '';
-
-    for (let i = 0; i < products.length; i++) {
-        container.innerHTML += 
-        `<div id="donut-${i}">
-        <button class="decrease" id="decrease-${i}">-</button>
-        <strong>${products[i].name}</strong>
-        Amount: ${products[i].amount}
-        Price: ${products[i].price}:-
-        <button class="increase" id="increase-${i}">+</button>
-        </div>`;
-    }
-
-    const increaseButtons = Array.from(document.querySelectorAll('.increase'));
-    for (let i = 0; i < increaseButtons.length; i++) {
-        increaseButtons[i].addEventListener('click', increaseAmount);
-    }
-}
