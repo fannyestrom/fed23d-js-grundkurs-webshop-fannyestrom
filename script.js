@@ -123,6 +123,9 @@ const products = [
         rating: '4.5',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/crepes.png'
+        }
     },
 
     {
@@ -131,6 +134,9 @@ const products = [
         rating: '4.0',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/croissant.png'
+        }
     },
 
     {
@@ -139,6 +145,9 @@ const products = [
         rating: '3.9',
         category: '',
         amount: 0,
+        img: {
+            src: 'images/cupcake.png'
+        }
     },
 
 ];
