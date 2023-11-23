@@ -152,17 +152,84 @@ const products = [
 
 ];
 
-// product images
+// print products
 
 const container = document.querySelector('#container');
+const shoppingCart = document.querySelector('#shoppingCart')
 
-products.forEach(product => {
-    container.innerHTML += `
-    <article>
-        <h2>${product.name}</h2>
-        <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
-    </article>
+function decreaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    if (products[index].amount <= 0) {
+        products[index].amount = 0;
+    } else {
+        products[index].amount -= 1;
+    }
+    printProducts();
+}
+
+function increaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    products[index].amount += 1;
+    printProducts();
+}
+
+function printProducts() {
+    container.innerHTML = '';
+
+    products.forEach((product, index) => {
+        container.innerHTML += `
+            <article>
+                <h2 class="product-heading">${product.name}</h2>
+                <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
+                <div class="product-info">
+                    <div class="product-price">Price: <span>${product.price}</span> kr</div>
+                    <div class="product-rating">Rating: <span>${product.rating}</span></div>
+                    <div class="product-amount">Amount: <span>${product.amount}</span></div>
+                </div>
+                <div class="button-container">
+                    <button class="decrease" data-id="${index}">-</button>
+                    <button class="increase" data-id="${index}">+</button>
+                </div>
+            </article>
+            <div class="divider">
+            </div class="divider">
+        `;
+    });
+    
+    const decreaseBtn = document.querySelectorAll('button.decrease');
+    const increaseBtn = document.querySelectorAll('button.increase');
+    
+    decreaseBtn.forEach(btn => {
+        btn.addEventListener('click', decreaseAmount);
+    });
+    
+    increaseBtn.forEach(btn => {
+        btn.addEventListener('click', increaseAmount);
+    });
+
+    printCartProducts();
+}
+
+function printCartProducts() {
+    shoppingCart.innerHTML = '';
+
+    let sum = 0;
+
+    products.forEach(product => {
+        if (product.amount > 0) {
+            sum += product.amount * product.price;
+            shoppingCart.innerHTML += `
+                <article>
+                    <span>${product.name}</span> | <span>${product.amount}</span> | <span>${product.amount * product.price} kr</span>
+                </article>
+            `;
+        }
+    });
+
+    shoppingCart.innerHTML += `
+        <p>Total: ${sum} kr</p>
     `;
-});
+}
 
+printProducts();
 

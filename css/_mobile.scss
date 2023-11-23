@@ -52,7 +52,7 @@ header {
             position: relative;
             bottom: 40px;
             margin: 16px 0;
-            font-size: 2rem;
+            font-size: 1.5rem;
             list-style: none;
 
             .nav-link {
@@ -113,24 +113,117 @@ main {
     gap: 10px;
 }
 
-h1 {
-    grid-column: 2 / 4;
-    text-align: center;
-    padding: 50px 0;
-    font-size: 3rem;
-}
-
-div {
+.first-page {
     grid-column: span 4;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
+
+    h1 {
+        grid-column: span 4;
+        text-align: center;
+        font-size: 3rem;
+        margin: 0;
+        height: 100vh;
+        position: relative;
+        top: 250px;
+    }
+
+    .first-page-divider {
+        grid-column: span 4;
+        height: 7px;
+        background-color: rgb(217, 217, 217);
+        position: relative;
+        bottom: 0;
+    }
 }
 
-img {
+.product-container {
     grid-column: span 4;
-    max-width: 100%;
-    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    article {
+        grid-column: span 4;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-content: space-between;
+    
+        .product-heading {
+            grid-column: 2 / 4;
+            text-align: center;
+            text-transform: uppercase;
+            position: relative;
+            top: 50px;
+        }
+
+        img {
+            width: 400px;
+            height: auto;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            font-family: 'Open Sans', sans-serif;
+    
+            .product-price {
+                grid-column: 2 / 4;
+                padding: 5px 0;
+            }
+        
+            .product-rating {
+                grid-column: 2 / 4;
+                padding: 5px 0;
+            }
+        
+            .product-amount {
+                grid-column: 2 / 4;
+                padding: 10px 0;
+            }
+        }
+    
+        .button-container {
+            position: relative;
+            bottom: 100px;
+    
+            .decrease {
+                font-size: 1.5rem;
+                background-color: rgb(255, 192, 227);
+                border: none;
+                border-radius: 8px;
+                padding: 0 11px 3px 11px;
+            }
+            
+            .increase {
+                font-size: 1.5rem;
+                background-color: rgb(255, 192, 227);
+                border: none;
+                border-radius: 8px;
+                padding: 0 8px 3px 8px;
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+
+    .divider {
+        grid-column: 1 / 5;;
+        height: 8px;
+        width: 100%;
+        background-color: rgb(217, 217, 217);
+    }
 }
+
+
+
+
+
 
 
