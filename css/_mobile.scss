@@ -131,8 +131,8 @@ main {
 
     .first-page-divider {
         grid-column: span 4;
-        height: 7px;
-        background-color: rgb(217, 217, 217);
+        height: 1px;
+        background-color: black;
         position: relative;
         bottom: 0;
     }
@@ -157,15 +157,13 @@ main {
             grid-column: 2 / 4;
             text-align: center;
             text-transform: uppercase;
-            position: relative;
-            top: 50px;
             font-family: 'Montserrat', sans-serif;
         }
 
         img {
             width: 400px;
             height: auto;
-            padding-top: 50px;
+            margin-top: 200px;
         }
 
         .product-info {
@@ -173,6 +171,8 @@ main {
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
+            position: relative;
+            top: -15px;
             font-family: 'Open Sans', sans-serif;
     
             .product-price {
@@ -184,16 +184,11 @@ main {
                 grid-column: 2 / 4;
                 padding: 5px 0;
             }
-        
-            .product-amount {
-                grid-column: 2 / 4;
-                padding: 10px 0;
-            }
         }
     
         .button-container {
             position: relative;
-            bottom: 100px;
+            bottom: 20px;
     
             .decrease {
                 font-size: 1.5rem;
@@ -212,6 +207,15 @@ main {
                 width: 30px;
                 height: 30px;
             }
+        }
+
+        .product-amount {
+            grid-column: 2 / 4;
+            position: relative;
+            bottom: 50px;
+            padding: 10px 0;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.8rem;
         }
     }
 

@@ -179,17 +179,17 @@ function printProducts() {
     products.forEach((product, index) => {
         container.innerHTML += `
             <article>
-                <h2 class="product-heading">${product.name}</h2>
                 <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
+                <h2 class="product-heading">${product.name}</h2>
                 <div class="product-info">
                     <div class="product-price">Price: <span>${product.price}</span> kr</div>
                     <div class="product-rating">Rating: <span>${product.rating}</span></div>
-                    <div class="product-amount">Amount: <span>${product.amount}</span></div>
                 </div>
                 <div class="button-container">
                     <button class="decrease" data-id="${index}">-</button>
                     <button class="increase" data-id="${index}">+</button>
                 </div>
+                <div class="product-amount">Amount: <span>${product.amount}</span></div>
             </article>
             <div class="divider">
             </div class="divider">
