@@ -159,11 +159,13 @@ main {
             text-transform: uppercase;
             position: relative;
             top: 50px;
+            font-family: 'Montserrat', sans-serif;
         }
 
         img {
             width: 400px;
             height: auto;
+            padding-top: 50px;
         }
 
         .product-info {
@@ -215,11 +217,38 @@ main {
 
     .divider {
         grid-column: 1 / 5;;
-        height: 8px;
+        height: 1px;
         width: 100%;
-        background-color: rgb(217, 217, 217);
+        background-color: black;
     }
 }
+
+.cart-container {
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    
+    h3 {
+        grid-column: 1 / 5;
+        font-size: 1.8rem;
+        padding: 40px 0px 20px 10px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    h4 {
+        grid-column: 1 / 5;
+        font-family: 'Open Sans', sans-serif;
+        padding: 0 0 15px 10px;
+    }
+
+    p {
+        font-family: 'Open Sans', sans-serif;
+        padding: 0 0 15px 10px;
+    }
+}
+
+
 
 
 
