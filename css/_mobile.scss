@@ -232,23 +232,59 @@ main {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
+    padding-left: 10px;
     
     h3 {
         grid-column: 1 / 5;
         font-size: 1.8rem;
-        padding: 40px 0px 20px 10px;
+        padding: 45px 0px 20px 10px;
         font-family: 'Montserrat', sans-serif;
     }
 
     h4 {
         grid-column: 1 / 5;
         font-family: 'Open Sans', sans-serif;
-        padding: 0 0 15px 10px;
+        padding: 15px 0 15px 10px;
     }
 
     p {
         font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
         padding: 0 0 15px 10px;
+    }
+}
+
+form {
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 40px 20px 0 20px;
+
+    h5 {
+        font-size: 1.7rem;
+        position: relative;
+        left: -3px;
+    }
+
+    .input-container {
+        grid-column: 1 / 5;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            border-radius: 4px;
+            border: 1px solid black;
+            padding: 8px 5px;
+        }
+    }
+
+    .order-button {
+        background: rgb(255, 192, 227);
+        border: none;
+        border-radius: 3px;
+        padding: 10px 20px;
     }
 }
 

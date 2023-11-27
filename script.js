@@ -19,6 +19,21 @@ addEventListener('click', () => {
 
 const products = [
     {
+        name: 'Chocolate Chip Cookie',
+        price: 30,
+        rating: '4.5',
+        category: '',
+        amount: 0,
+        img: {
+            src: 'images/chocolate chip cookie.png',
+            width: 100,
+            height: 100,
+            alt: 'Three chocolate chip cookies',
+            loading: 'lazy',
+        }
+    },
+    
+    {
         name: 'Cannoli',
         price: 25,
         rating: '3.7',
@@ -28,7 +43,23 @@ const products = [
             src: 'images/cannoli.png',
             width: 100,
             height: 100,
-            alt: 'Cannoli'
+            alt: 'Cannoli with chocolate topping',
+            loading: 'lazy'
+        }
+    },
+
+    {
+        name: 'Cupcake',
+        price: 35,
+        rating: '3.9',
+        category: '',
+        amount: 0,
+        img: {
+            src: 'images/cupcake.png',
+            width: 100,
+            height: 100,
+            alt: 'Cupcake with pink frosting',
+            loading: 'lazy'
         }
     },
 
@@ -42,7 +73,8 @@ const products = [
             src: 'images/caramel cheesecake.png',
             width: 100,
             height: 100,
-            alt: 'Caramel cheesecake'
+            alt: 'Caramel cheesecake',
+            loading: 'lazy'
         }
     },
 
@@ -56,21 +88,8 @@ const products = [
             src: 'images/carrot cake.png',
             width: 100,
             height: 100,
-            alt: 'Carrot cake'
-        }
-    },
-
-    {
-        name: 'Chocolate Chip Cookie',
-        price: 30,
-        rating: '4.5',
-        category: '',
-        amount: 0,
-        img: {
-            src: 'images/chocolate chip cookie.png',
-            width: 100,
-            height: 100,
-            alt: 'Chocolate chip cookie'
+            alt: 'Two layered carrot cake',
+            loading: 'lazy'
         }
     },
 
@@ -84,7 +103,8 @@ const products = [
             src: 'images/chocolate glazed brownie.png',
             width: 100,
             height: 100,
-            alt: 'chocolate glazed brownie'
+            alt: 'Chocolate glazed brownie',
+            loading: 'lazy'
         }
     },
 
@@ -98,7 +118,8 @@ const products = [
             src: 'images/churros.png',
             width: 100,
             height: 100,
-            alt: 'Churros'
+            alt: 'Churros with small bowl of nutella in the middle',
+            loading: 'lazy'
         }
         
     },
@@ -113,7 +134,8 @@ const products = [
             src: 'images/cinnamon roll.png',
             width: 100,
             height: 100,
-            alt: 'Cinnamon roll'
+            alt: 'Cinnamon roll with frosting',
+            loading: 'lazy'
         }
     },
 
@@ -124,7 +146,11 @@ const products = [
         category: '',
         amount: 0,
         img: {
-            src: 'images/crepes.png'
+            src: 'images/crepes.png',
+            width: 100,
+            height: 100,
+            alt: 'Crêpes with cream and syrup',
+            loading: 'lazy'
         }
     },
 
@@ -135,27 +161,23 @@ const products = [
         category: '',
         amount: 0,
         img: {
-            src: 'images/croissant.png'
-        }
-    },
-
-    {
-        name: 'Cupcake',
-        price: 35,
-        rating: '3.9',
-        category: '',
-        amount: 0,
-        img: {
-            src: 'images/cupcake.png'
+            src: 'images/croissant.png',
+            width: 100,
+            height: 100,
+            alt: 'Croissant',
+            loading: 'lazy'
         }
     },
 
 ];
 
-// print products
 
 const container = document.querySelector('#container');
-const shoppingCart = document.querySelector('#shoppingCart')
+const shoppingCart = document.querySelector('#shoppingCart');
+const filterContainer = document.querySelector('#filterContainer');
+
+
+// increase & decrease buttons
 
 function decreaseAmount(e) {
     const index = e.currentTarget.dataset.id;
@@ -172,6 +194,9 @@ function increaseAmount(e) {
     products[index].amount += 1;
     printProducts();
 }
+
+
+// print products
 
 function printProducts() {
     container.innerHTML = '';
@@ -210,6 +235,9 @@ function printProducts() {
     printCartProducts();
 }
 
+
+// print in-cart products
+
 function printCartProducts() {
     shoppingCart.innerHTML = '';
 
@@ -230,6 +258,12 @@ function printCartProducts() {
         <p>Total: ${sum} kr</p>
     `;
 }
+
+// sort products
+
+const sorted = products.sort((a, b) => {
+    return a.name === b.name ? 0 : a.name < b.name ? -1 : 1;
+  });
 
 printProducts();
 
