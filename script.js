@@ -259,15 +259,26 @@ function printCartProducts() {
     `;
 }
 
-// sort products
+
+// sort products by name
+
+function sortProductsByName() {
+    products.sort((a, b) => a.name.localeCompare(b.name));
+    printProducts();
+}
+
+const sortNameButton = document.querySelector('#sortNameButton');
+sortNameButton.addEventListener('click', sortProductsByName);
+
+// sort products by price
 
 function sortProductsByPrice() {
     products.sort((a, b) => a.price - b.price);
     printProducts();
 }
 
-const sortButton = document.querySelector('#sortButton');
-sortButton.addEventListener('click', sortProductsByPrice);
+const sortPriceButton = document.querySelector('#sortPriceButton');
+sortPriceButton.addEventListener('click', sortProductsByPrice);
 
 
 printProducts();

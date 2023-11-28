@@ -140,15 +140,21 @@ main {
 
 .sort-container {
     grid-column: span 4;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
 
-    .sort-button {
-        grid-column: 4;
+    .sort-name {
         padding: 5px;
         position: relative;
+        right: 20px; 
     }
+
+    .sort-price {
+        padding: 5px;
+        position: relative;
+        right: 20px;
+    }
+    
 }
 
 .product-container {
