@@ -217,7 +217,7 @@ function printProducts() {
                 <div class="product-amount">Amount: <span>${product.amount}</span></div>
             </article>
             <div class="divider">
-            </div class="divider">
+            </div>
         `;
     });
     
@@ -261,9 +261,14 @@ function printCartProducts() {
 
 // sort products
 
-const sorted = products.sort((a, b) => {
-    return a.name === b.name ? 0 : a.name < b.name ? -1 : 1;
-  });
+function sortProductsByPrice() {
+    products.sort((a, b) => a.price - b.price);
+    printProducts();
+}
+
+const sortButton = document.querySelector('#sortButton');
+sortButton.addEventListener('click', sortProductsByPrice);
+
 
 printProducts();
 
