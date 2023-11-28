@@ -143,17 +143,24 @@ main {
     display: flex;
     justify-content: flex-end;
 
-    .sort-name {
-        padding: 5px;
+    .sort-products {
         position: relative;
-        right: 20px; 
+        left: -70px;
+        top: 32px;
+        font-family: 'Open Sans', sans-serif;
     }
 
-    .sort-price {
-        padding: 5px;
+    .sort-name, .sort-price {
+        background: transparent;
+        border: none;
         position: relative;
-        right: 20px;
+        right: 10px;
+        margin: 20px 10px 10px 10px;
+        width: 50px;
+        height: 50px;
     }
+
+
     
 }
 
