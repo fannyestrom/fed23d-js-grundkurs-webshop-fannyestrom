@@ -1,0 +1,106 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* 
+----------------------------------------------------
+----------------------- header ---------------------
+----------------------------------------------------
+ */
+
+header {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+}
+
+
+/* 
+----------------------------------------------------
+----------------------- main page ---------------------
+----------------------------------------------------
+ */
+
+main {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.first-page {
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.product-container {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+
+    article {
+        grid-column: span 8;
+    }
+
+    .divider {
+        grid-column: 1 / 9;
+    }
+}
+
+.cart-container {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+
+    h3 {
+        grid-column: 1 / 9;
+        font-size: 2rem;
+    }
+
+    h4 {
+        grid-column: 1 / 9;
+        padding: 15px 0 15px 10px;
+    }
+}
+
+.shopping-cart {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+
+    .cart-summary {
+        grid-column: 1 / 4;
+    }
+
+    .total-sum {
+        grid-column: 1;
+    }
+}
+
+form {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+
+    h5 {
+        font-size: 2rem;
+    }
+
+    .input-container {
+        grid-column: 1 / 9;
+
+        input {
+            border-radius: 4px;
+            padding: 8px 5px;
+        }
+    }
+}

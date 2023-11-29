@@ -150,7 +150,7 @@ main {
         font-family: 'Open Sans', sans-serif;
     }
 
-    .sort-name, .sort-price {
+    .sort-name, .sort-price, .sort-category {
         background: transparent;
         border: none;
         position: relative;
@@ -246,7 +246,7 @@ main {
     }
 
     .divider {
-        grid-column: 1 / 5;;
+        grid-column: 1 / 5;
         height: 1px;
         width: 100%;
         background-color: black;
@@ -280,11 +280,16 @@ main {
     }
 }
 
+.cart-summary {
+    font-family: 'Open Sans', sans-serif;
+    padding: 0 0 15px 10px;
+}
+
 form {
     grid-column: span 4;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    gap: 10px;
     font-family: 'Open Sans', sans-serif;
     padding: 40px 20px 0 20px;
 
@@ -292,6 +297,7 @@ form {
         font-size: 1.7rem;
         position: relative;
         left: -3px;
+        margin-bottom: 20px;
     }
 
     .input-container {
