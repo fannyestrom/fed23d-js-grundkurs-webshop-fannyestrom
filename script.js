@@ -198,19 +198,23 @@ function printProducts() {
     container.innerHTML = '';
 
     products.forEach((product, index) => {
+        const discountedPrice = calculateDiscountedPrice(product.price);
+
+        const subtotal = product.amount * discountedPrice;
+
         container.innerHTML += `
             <article>
                 <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
                 <h2 class="product-heading">${product.name}</h2>
                 <div class="product-info">
-                    <div class="product-price">Price: <span>${product.price}</span> kr</div>
+                    <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
                     <div class="product-rating">Rating: <span>${product.rating}</span></div>
                 </div>
                 <div class="button-container">
                     <button class="decrease" data-id="${index}">-</button>
                     <button class="increase" data-id="${index}">+</button>
                 </div>
-                <div class="product-amount">Amount: <span>${product.amount}</span></div>
+                <div class="product-amount">Amount: <span>x${product.amount}</span></div>
             </article>
             <div class="divider">
             </div>
@@ -231,9 +235,28 @@ function printProducts() {
     printCartProducts();
 }
 
+// function to calculate the surcharge
+function calculateSurcharge(originalSubtotal) {
+    // check if the surcharge is applicable (friday 3pm - monday 3am)
+    if (hasWeekendSurcharge()) {
+        const surchargePercentage = 0.15;
+        const surchargeAmount = originalSubtotal * surchargePercentage;
+        const totalWithSurcharge = originalSubtotal + surchargeAmount;
+
+        return totalWithSurcharge;
+    }
+
+    // if surcharge is not applicable, return the original subtotal
+    return originalSubtotal;
+}
+
+
+// define surchargeAmount as a global variable
+let surchargeAmount = 0;
+
 
 // print in-cart products
-// Function to print in-cart products with discount information
+// print in-cart products with discount information
 function printCartProducts() {
     shoppingCart.innerHTML = '';
   
@@ -242,38 +265,61 @@ function printCartProducts() {
   
     products.forEach((product) => {
       if (product.amount > 0) {
-        const subtotal = product.amount * product.price;
+        const originalSubtotal = product.amount * product.price;
+
+        // calculate the discounted or surcharged subtotal
+        const subtotal = calculateDiscountedPrice(originalSubtotal);
   
-        // Check if it's Monday before 10 am and apply the discount
-        const discountedSubtotal = isMondayBefore10AM()
-          ? calculateDiscountedPrice(subtotal)
-          : subtotal;
+        // check if the surcharge is applicable
+        const surchargeSubtotal = hasWeekendSurcharge()
+          ? calculateSurcharge(originalSubtotal)
+          : originalSubtotal;
   
-        sum += discountedSubtotal; // Use discountedSubtotal here
+        sum += subtotal; // accumulate the discounted or surcharged subtotal
   
         shoppingCart.innerHTML += `
           <article class="cart-summary">
-            <span>${product.name}</span> | <span>${product.amount}</span> | 
-            <span>${isMondayBefore10AM() ? discountedSubtotal : subtotal} kr</span>
+            <span>${product.name}</span> | <span>x${product.amount}</span> | 
+            <span>${calculateDiscountedPrice(originalSubtotal)} SEK</span>
           </article>`;
   
-        // Check if the discount is applied to at least one product in the cart
-        if (discountedSubtotal !== subtotal) {
-          discountApplied = true;
+        // check if the discount is applied to at least one product in the cart
+        if (originalSubtotal !== subtotal) {
+            discountApplied = true;
         }
       }
     });
-  
-    if (discountApplied) {
+
+    // display monday discount information in shoppingCart
+    if (isMondayBetween3AMand10AM() && discountApplied) {
       shoppingCart.innerHTML += `
         <p class="discount-info">Monday discount: 10% off orders!</p>`;
-    }
+    } 
   
     shoppingCart.innerHTML += `
-      <p class="total-sum">Total: ${sum} kr</p>`;
+      <p class="total-sum">Subtotal: ${sum} SEK</p>`;
+}
+
+// check if it's Monday between 3 AM and 10 AM
+function isMondayBetween3AMand10AM() {
+    const currentDate = new Date();
+
+    const dayOfWeek = currentDate.getDay();
+    const hour = currentDate.getHours();
+
+    return dayOfWeek === 1 && hour >= 3 && hour < 10;
+}
+
+// check if there is a surcharge on the weekend
+function hasWeekendSurcharge() {
+    const currentDate = new Date();
+    const dayOfWeek = currentDate.getDay();
+    const hour = currentDate.getHours();
+
+    return (dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3);
 }
   
-// Call the function to print in-cart products initially
+// call the function to print in-cart products 
 printCartProducts();
   
 
@@ -298,41 +344,66 @@ sortPriceButton.addEventListener('click', sortProductsByPrice);
 
 
 /* 
-10% off on Mondays before 10am
+10% off on Mondays before 10 am
+15% surcharge on Fridays after 3 pm to Monday 3 am
 */
+
 // Function to calculate the discounted price
 function calculateDiscountedPrice(originalPrice) {
-    // Apply 10% discount
-    return Math.round(originalPrice * 0.9);
+    
+    const testDate = new Date('2023-12-01T16:00:00'); 
+    const dayOfWeek = testDate.getDay();
+    const hour = testDate.getHours();
+    
+
+    /*
+    const currentDate = new Date();
+    const dayOfWeek = currentDate.getDay();
+    const hour = currentDate.getHours();
+    */
+    
+    // Apply 10% discount on Mondays between 3 AM and 10 AM
+    if (dayOfWeek === 1 && hour >= 3 && hour < 10) {
+        console.log('10% discount applied!');
+        return Math.round(originalPrice * 0.9);
+    }
+
+    // Apply 15% weekend surcharge on Fridays after 3 PM to Monday 3 AM
+    if ((dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3)) {
+        console.log('15% surcharge applied!');
+        return Math.round(originalPrice * 1.15);
+    }
+
+    // No discount or surcharge
+    console.log('No discount or surcharge.');
+    return originalPrice;
 }
   
 
-// Function to print products with discounts
+// print products with discounts
 function printProductsWithDiscount() {
     container.innerHTML = '';
   
     products.forEach((product, index) => {
-      const discountedPrice = isMondayBefore10AM()
-        ? calculateDiscountedPrice(product.price)
-        : null;
+      const discountedPrice = calculateDiscountedPrice(product.price);
 
-      const subtotal = product.amount * (discountedPrice !== null ? discountedPrice : product.price);
-      const discountedSubtotal = discountedPrice !== null ? calculateDiscountedPrice(subtotal) : subtotal;
+      const subtotal = product.amount * discountedPrice;
+      const discountedSubtotal = calculateDiscountedPrice(subtotal);
   
       container.innerHTML += `
         <article>
             <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
             <h2 class="product-heading">${product.name}</h2>
             <div class="product-info">
-                <div class="product-price">Price: <span>${discountedPrice !== null ? discountedPrice : product.price}</span> kr</div>
+                <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
                 <div class="product-rating">Rating: <span>${product.rating}</span></div>
             </div>
             <div class="button-container">
                 <button class="decrease" data-id="${index}">-</button>
                 <button class="increase" data-id="${index}">+</button>
             </div>
-            <div class="product-amount">Amount: <span>${product.amount}</span></div>
-            ${product.amount > 0 ? `<div class="product-subtotal">Subtotal: <span>${discountedSubtotal} kr</span></div>` : ''}
+            <div class="product-amount">Amount: <span>x${product.amount}</span></div>
+            ${product.amount > 0 ? `<div class="product-subtotal">Subtotal: <span>${discountedSubtotal} SEK</span></div>` : ''}
         </article>
         <div class="divider"></div>
       `;
@@ -349,35 +420,14 @@ function printProductsWithDiscount() {
       btn.addEventListener('click', increaseAmount);
     });
   
-    // Call the function to print the shopping cart products
+    // call function to print the shopping cart products
     printCartProducts();
 }
-
- 
-// Function to check if it's Monday before 10 AM
-function isMondayBefore10AM() {
-    
-    /*
-    // For testing purposes, set the current day to Monday and time to before 10 AM
-    const testDate = new Date('2023-11-27T09:00:00'); // Adjust the date and time as needed
   
-    const dayOfWeek = testDate.getDay(); // Sunday is 0, Monday is 1, and so on
-    const hour = testDate.getHours();
-    */
-
-    const currentDate = new Date();
-
-    // Check if it's Monday and before 10 AM
-    const dayOfWeek = currentDate.getDay(); // Sunday is 0
-    const hour = currentDate.getHours();
-  
-    return dayOfWeek === 1 && hour < 10;
-}
-
-  
-// Call the function to print products with discounts initially
+// function to print products with discounts 
 printProductsWithDiscount();
   
-  
+
+
 
   
