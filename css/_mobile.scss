@@ -270,6 +270,7 @@ main {
     h4 {
         grid-column: 1 / 5;
         font-family: 'Open Sans', sans-serif;
+        font-size: 1.2rem;
         padding: 15px 0 15px 10px;
     }
 
@@ -278,12 +279,30 @@ main {
         font-weight: 600;
         padding: 0 0 15px 10px;
     }
+
+    .shopping-cart {
+        grid-column: span 4;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+
+        .cart-summary {
+            grid-column: span 4;
+            font-family: 'Open Sans', sans-serif;
+            padding: 0 0 15px 10px;
+        }
+    
+        .discount-info {
+            grid-column: span 4;
+            font-size: 1.1rem;
+        }
+
+        .total-sum {
+            grid-column: span 4;
+        }
+    }
 }
 
-.cart-summary {
-    font-family: 'Open Sans', sans-serif;
-    padding: 0 0 15px 10px;
-}
 
 form {
     grid-column: span 4;

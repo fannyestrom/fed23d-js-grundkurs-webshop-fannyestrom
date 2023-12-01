@@ -293,7 +293,7 @@ function printCartProducts() {
     // display monday discount information in shoppingCart
     if (isMondayBetween3AMand10AM() && discountApplied) {
       shoppingCart.innerHTML += `
-        <p class="discount-info">Monday discount: 10% off orders!</p>`;
+        <p class="discount-info">Monday discount: 10% off the entire order!</p>`;
     } 
   
     shoppingCart.innerHTML += `
@@ -302,11 +302,16 @@ function printCartProducts() {
 
 // check if it's Monday between 3 AM and 10 AM
 function isMondayBetween3AMand10AM() {
+    const testDate = new Date('2023-12-04T09:00:00'); 
+    const dayOfWeek = testDate.getDay();
+    const hour = testDate.getHours();
+    
+    /*
     const currentDate = new Date();
 
     const dayOfWeek = currentDate.getDay();
     const hour = currentDate.getHours();
-
+    */
     return dayOfWeek === 1 && hour >= 3 && hour < 10;
 }
 
@@ -351,11 +356,10 @@ sortPriceButton.addEventListener('click', sortProductsByPrice);
 // Function to calculate the discounted price
 function calculateDiscountedPrice(originalPrice) {
     
-    const testDate = new Date('2023-12-01T16:00:00'); 
+    const testDate = new Date('2023-12-04T09:00:00'); 
     const dayOfWeek = testDate.getDay();
     const hour = testDate.getHours();
     
-
     /*
     const currentDate = new Date();
     const dayOfWeek = currentDate.getDay();
@@ -426,6 +430,13 @@ function printProductsWithDiscount() {
   
 // function to print products with discounts 
 printProductsWithDiscount();
+
+
+
+/* fixat så priserna matchar varukorgen men 
+- priset ska ju inte ändras -10% i själva arrayen utan bara varukorgen
+x texten som säger att det är -10% dyker just nu inte upp
+*/
   
 
 
