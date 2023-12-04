@@ -434,8 +434,9 @@ printProductsWithDiscount();
 
 
 /* fixat så priserna matchar varukorgen men 
-- priset ska ju inte ändras -10% i själva arrayen utan bara varukorgen
-x texten som säger att det är -10% dyker just nu inte upp
+- priset ska ju inte ändras 10% i själva arrayen utan bara varukorgen
+x texten som säger att det är 10% dyker just nu inte upp
+- helst ska ju även varukorgens innehåll visa originalpriset och sedan reapriset i anslutning också
 */
   
 
