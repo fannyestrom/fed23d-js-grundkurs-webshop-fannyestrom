@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Café C</title>
 
     <link rel="stylesheet" href="normalize.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -49,7 +50,7 @@
 
     <main>
         <div class="first-page">
-            <h1>Heading</h1>
+            <h1><span class="welcome">Welcome to</span><span class="h1-linebreak"></span><span class="cafe-c">Café C</span></h1>
             <div class="first-page-divider"></div>
         </div>
 
@@ -62,10 +63,23 @@
             <button class="sort-price" id="sortPriceButton">
                 <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" width="35"><path d="M560-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM280-320q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80h400q0-33 23.5-56.5T840-480v-160q-33 0-56.5-23.5T760-720H360q0 33-23.5 56.5T280-640v160q33 0 56.5 23.5T360-400Zm440 240H120q-33 0-56.5-23.5T40-240v-440h80v440h680v80ZM280-400v-320 320Z"/></svg>
             </button>
+        </div>
 
-            <button class="sort-category">
-                <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" width="35"><path d="m260-520 220-360 220 360H260ZM700-80q-75 0-127.5-52.5T520-260q0-75 52.5-127.5T700-440q75 0 127.5 52.5T880-260q0 75-52.5 127.5T700-80Zm-580-20v-320h320v320H120Zm580-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-500-20h160v-160H200v160Zm202-420h156l-78-126-78 126Zm78 0ZM360-340Zm340 80Z"/></svg>
-            </button>
+        <div class="category-container">
+            <label class="category-labels">
+                <input class="sort-vegan-button" id="sortVeganButton" type="radio" name="category-button" value="vegan">
+                <span>Vegan</span>
+            </label>
+
+            <label class="category-labels">
+                <input class="sort-gluten-free-button" id="sortGlutenFreeButton" type="radio" name="category-button" value="gluten-free">
+                <span>Gluten-free</span>
+            </label>
+
+            <label class="category-labels">
+                <input class="sort-nuts-button" id="sortNutsButton" type="radio" name="category-button" value="traces-of-nuts">
+                <span>May contain traces of nuts</span>
+            </label>
         </div>
 
         <div class="product-container" id="container"></div>
@@ -76,6 +90,9 @@
             <h4>Order summary</h4>
             <div class="shopping-cart" id="shoppingCart"></div>        
         </div> 
+
+
+        <!---------------------- customer form -------------------->
         
         <form class="customer-form" id="customerForm">
 
@@ -102,13 +119,13 @@
             </span>
 
             <span class="input-container">
-                <label for="passcode">Ev. passcode</label>
-                <input type="text" id="passcode" name="passcode" placeholder="e.g. 1234" required>
+                <label for="passcode">Passcode (optional)</label>
+                <input type="number" id="passcode" name="passcode" placeholder="e.g. 1234">
             </span>
 
             <span class="input-container">
                 <label for="postalcode">Postal code</label>
-                <input type="text" id="postalcode" name="postalcode" placeholder="123 45" required>
+                <input type="number" id="postalcode" name="postalcode" placeholder="123 45" required>
             </span>
 
             <span class="input-container">
@@ -121,9 +138,64 @@
                 <input type="tel" id="tel" name="tel" placeholder="000-000-0000" required>
             </span>
 
-            <button class="order-button" id="orderBtn">
-                Place order
-            </button>
+            <span class="input-container">
+                <label for="discount-input">Discount code or gift card</label>
+                <input type="text" id="discount-input" name="discount-input" placeholder="Discount code or gift card">
+            </span>
+
+            <label>
+                <input type="checkbox" name="gdpr" required>
+                <span>I consent use of my personal data</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="news-letter">
+                <span>Recieve news & offers via email!</span>
+            </label>
+            
+            <div class="payment-options">
+                <div class="selector">
+                  <label>
+                    <input type="radio" name="payment-option" value="invoice">
+                    <span>Invoice</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="payment-option" value="card" checked>
+                    <span>Card</span>
+                  </label>
+                </div>
+              
+                <div class="invoice hidden" id="invoice">
+                  <label>
+                    <span>Personal security number</span>
+                    <input class="payment-input" type="text" name="personal-id" id="personalID" value="19980422-1234">
+                  </label>
+                </div>
+              
+                <div class="card" id="card">
+                  <label>
+                    <span>Card number</span>
+                    <input class="payment-input" type="number" id="creditCardNumber" value="5100080000000000">
+                  </label>
+                  <label>
+                    <span>Date</span>
+                    <span>
+                        <input class="payment-input" type="number" class="small" placeholder="YY" id="creditCardYear">/<input type="number" class="small" placeholder="MM" id="creditCardMonth">
+                      </span>
+                  </label>
+                  <label>
+                    <span>CVC</span>
+                    <input class="payment-input" type="number" placeholder="123" id="creditCardCvc">
+                  </label>
+                </div>
+              
+                <button class="order-button" id="orderBtn" disabled>Place order</button>
+              </div>
+
+<script src="main.js"></script>
+</body>
+</html>
+
         </form>
 
     </main>

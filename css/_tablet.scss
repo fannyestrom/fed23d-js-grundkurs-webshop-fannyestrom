@@ -32,10 +32,38 @@ main {
 }
 
 .first-page {
-    grid-column: span 4;
+    grid-column: span 8;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 10px;
+
+    h1 {
+        grid-column: span 8;
+    }
+
+    .first-page-divider {
+        grid-column: span 8;
+    }
+}
+
+.sort-container {
+    grid-column: span 8;
+
+    .sort-products {
+        grid-column: 1;
+    }
+
+    .sort-name {
+        grid-column: 7;
+    }
+
+    .sort-price {
+        grid-column: 8;
+    }
+}
+
+.category-container {
+    grid-column: span 8;
 }
 
 .product-container {
@@ -46,6 +74,19 @@ main {
 
     article {
         grid-column: span 8;
+
+        .button-container {
+
+            .decrease {
+                width: 50px;
+                height: 50px;
+            }
+
+            .increase {
+                width: 50px;
+                height: 50px;
+            }
+        }
     }
 
     .divider {
@@ -85,8 +126,8 @@ main {
     }
 }
 
-form {
-    grid-column: span 8;
+.customer-form {
+    grid-column: 2 / 8;
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 10px;
@@ -96,11 +137,15 @@ form {
     }
 
     .input-container {
-        grid-column: 1 / 9;
+        grid-column: span 8;
 
         input {
             border-radius: 4px;
             padding: 8px 5px;
         }
+    }
+
+    .payment-options {
+        grid-column: span 8;
     }
 }

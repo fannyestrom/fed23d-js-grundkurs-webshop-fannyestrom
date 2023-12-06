@@ -20,7 +20,7 @@ const products = [
         name: 'Chocolate Chip Cookie',
         price: 30,
         rating: '4.5',
-        category: '',
+        category: 'May contain traces of nuts',
         amount: 0,
         img: {
             src: 'images/chocolate chip cookie.png',
@@ -35,7 +35,7 @@ const products = [
         name: 'Cannoli',
         price: 25,
         rating: '3.7',
-        category: '',
+        category: 'Vegan',
         amount: 0,
         img: {
             src: 'images/cannoli.png',
@@ -50,7 +50,7 @@ const products = [
         name: 'Cupcake',
         price: 35,
         rating: '3.9',
-        category: '',
+        category: 'May contain traces of nuts',
         amount: 0,
         img: {
             src: 'images/cupcake.png',
@@ -65,7 +65,7 @@ const products = [
         name: 'Caramel Cheesecake',
         price: 40,
         rating: '4.3',
-        category: '',
+        category: 'Vegan',
         amount: 0,
         img: {
             src: 'images/caramel cheesecake.png',
@@ -80,7 +80,7 @@ const products = [
         name: 'Carrot Cake',
         price: 40,
         rating: '4.9',
-        category: '',
+        category: 'Vegan',
         amount: 0,
         img: {
             src: 'images/carrot cake.png',
@@ -95,7 +95,7 @@ const products = [
         name: 'Chocolate Glazed Brownie',
         price: 40,
         rating: '4.8',
-        category: '',
+        category: 'May contain traces of nuts',
         amount: 0,
         img: {
             src: 'images/chocolate glazed brownie.png',
@@ -110,7 +110,7 @@ const products = [
         name: 'Churros',
         price: 45,
         rating: '5.0',
-        category: '',
+        category: 'Gluten-free',
         amount: 0,
         img: {
             src: 'images/churros.png',
@@ -126,7 +126,7 @@ const products = [
         name: 'Cinnamon Roll',
         price: 35,
         rating: '4.9',
-        category: '',
+        category: 'Gluten-free',
         amount: 0,
         img: {
             src: 'images/cinnamon roll.png',
@@ -141,7 +141,7 @@ const products = [
         name: 'Crêpes',
         price: 45,
         rating: '4.5',
-        category: '',
+        category: 'Vegan',
         amount: 0,
         img: {
             src: 'images/crepes.png',
@@ -156,7 +156,7 @@ const products = [
         name: 'Croissant',
         price: 30,
         rating: '4.0',
-        category: '',
+        category: 'Gluten-free',
         amount: 0,
         img: {
             src: 'images/croissant.png',
@@ -184,15 +184,18 @@ function decreaseAmount(e) {
         products[index].amount -= 1;
     }
     printProducts();
+    printCartProducts();
 }
 
 function increaseAmount(e) {
     const index = e.currentTarget.dataset.id;
     products[index].amount += 1;
     printProducts();
+    printCartProducts();
 }
 
 
+// print products
 // print products
 function printProducts() {
     container.innerHTML = '';
@@ -209,6 +212,7 @@ function printProducts() {
                 <div class="product-info">
                     <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
                     <div class="product-rating">Rating: <span>${product.rating}</span></div>
+                    <div class="product-category">Category: <span>${product.category}</span></div>
                 </div>
                 <div class="button-container">
                     <button class="decrease" data-id="${index}">-</button>
@@ -328,24 +332,69 @@ function hasWeekendSurcharge() {
 printCartProducts();
   
 
+/* 
+sort products by different categories 
+*/
 
-// sort products by name
-function sortProductsByName() {
-    products.sort((a, b) => a.name.localeCompare(b.name));
-    printProducts();
+function displayProducts(filteredProducts) {
+    container.innerHTML = '';
+
+    filteredProducts.forEach((product, index) => {
+        const discountedPrice = calculateDiscountedPrice(product.price);
+
+        container.innerHTML += `
+            <article>
+                <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
+                <h2 class="product-heading">${product.name}</h2>
+                <div class="product-info">
+                    <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
+                    <div class="product-rating">Rating: <span>${product.rating}</span></div>
+                    <div class="product-category">Category: <span>${product.category}</span></div>
+                </div>
+                <div class="button-container">
+                    <button class="decrease" data-id="${index}">-</button>
+                    <button class="increase" data-id="${index}">+</button>
+                </div>
+                <div class="product-amount">Amount: <span>x${product.amount}</span></div>
+            </article>
+            <div class="divider"></div>
+        `;
+    });
+
+    const decreaseBtn = document.querySelectorAll('button.decrease');
+    const increaseBtn = document.querySelectorAll('button.increase');
+
+    decreaseBtn.forEach(btn => {
+        btn.addEventListener('click', decreaseAmount);
+    });
+
+    increaseBtn.forEach(btn => {
+        btn.addEventListener('click', increaseAmount);
+    });
+
+    // Update the shopping cart with the filtered products
+    printCartProducts();
 }
 
-const sortNameButton = document.querySelector('#sortNameButton');
-sortNameButton.addEventListener('click', sortProductsByName);
+// Update the click event listeners for sorting by category
+const sortVeganButton = document.querySelector('#sortVeganButton');
+sortVeganButton.addEventListener('click', () => {
+    const veganProducts = products.filter(product => product.category === 'Vegan');
+    displayProducts(veganProducts);
+});
 
-// sort products by price
-function sortProductsByPrice() {
-    products.sort((a, b) => a.price - b.price);
-    printProducts();
-}
+const sortGlutenFreeButton = document.querySelector('#sortGlutenFreeButton');
+sortGlutenFreeButton.addEventListener('click', () => {
+    const glutenFreeProducts = products.filter(product => product.category === 'Gluten-free');
+    displayProducts(glutenFreeProducts);
+});
 
-const sortPriceButton = document.querySelector('#sortPriceButton');
-sortPriceButton.addEventListener('click', sortProductsByPrice);
+const sortNutsButton = document.querySelector('#sortNutsButton');
+sortNutsButton.addEventListener('click', () => {
+    const nutsProducts = products.filter(product => product.category === 'May contain traces of nuts');
+    displayProducts(nutsProducts);
+});
+
 
 
 /* 
@@ -368,18 +417,15 @@ function calculateDiscountedPrice(originalPrice) {
     
     // Apply 10% discount on Mondays between 3 AM and 10 AM
     if (dayOfWeek === 1 && hour >= 3 && hour < 10) {
-        console.log('10% discount applied!');
         return Math.round(originalPrice * 0.9);
     }
 
     // Apply 15% weekend surcharge on Fridays after 3 PM to Monday 3 AM
     if ((dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3)) {
-        console.log('15% surcharge applied!');
         return Math.round(originalPrice * 1.15);
     }
 
     // No discount or surcharge
-    console.log('No discount or surcharge.');
     return originalPrice;
 }
   
@@ -401,6 +447,7 @@ function printProductsWithDiscount() {
             <div class="product-info">
                 <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
                 <div class="product-rating">Rating: <span>${product.rating}</span></div>
+                <div class="product-category">Category: <span>${product.category}</span></div>
             </div>
             <div class="button-container">
                 <button class="decrease" data-id="${index}">-</button>
@@ -432,14 +479,91 @@ function printProductsWithDiscount() {
 printProductsWithDiscount();
 
 
-
-/* fixat så priserna matchar varukorgen men 
-- priset ska ju inte ändras 10% i själva arrayen utan bara varukorgen
-x texten som säger att det är 10% dyker just nu inte upp
-- helst ska ju även varukorgens innehåll visa originalpriset och sedan reapriset i anslutning också
+/*
+* payment options
 */
+const cardInvoiceRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
+const inputs = [
+  document.querySelector('#creditCardNumber'),
+  document.querySelector('#creditCardYear'),
+  document.querySelector('#creditCardMonth'),
+  document.querySelector('#creditCardCvc'),
+  document.querySelector('#personalID')
+];
+
+const invoiceOption = document.querySelector('#invoice');
+const cardOption = document.querySelector('#card');
+const orderBtn = document.querySelector('#orderBtn');
+
+// Default options
+let selectedPaymentOption = 'card';
+
+// REGEX
+const personalIdRegEx = new RegExp(/^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/);
+const creditCardNumberRegEx = new RegExp(/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/); // MasterCard
+
+// Add event listeners
+inputs.forEach(input => {
+  input.addEventListener('focusout', activateOrderButton);
+  input.addEventListener('change', activateOrderButton);
+});
+
+cardInvoiceRadios.forEach(radioBtn => {
+  radioBtn.addEventListener('change', switchPaymentMethod);
+});
+
+/**
+ * Switches between invoice payment method and
+ * card payment method. Toggles their visibility.
+ */
+function switchPaymentMethod(e) {
+  invoiceOption.classList.toggle('hidden');
+  cardOption.classList.toggle('hidden');
+
+  selectedPaymentOption = e.target.value;
+}
+
+function isPersonalIdNumberValid() {
+  return personalIdRegEx.exec(personalId.value);
+}
+
+/**
+ * Activate order button if all fields are
+ * correctly filled.
+ */
+function activateOrderButton() {
+  orderBtn.setAttribute('disabled', '');
+
+  if (selectedPaymentOption === 'invoice' && !isPersonalIdNumberValid()) {
+    return;
+  }
   
+  if (selectedPaymentOption === 'card') {
+    // Check card number
+    if (creditCardNumberRegEx.exec(creditCardNumber.value) === null) {
+      console.warn('Credit card number not valid.');
+      return;
+    }
 
+    // Check card year
+    let year = Number(creditCardYear.value);
+    const today = new Date();
+    const shortYear = Number(String(today.getFullYear()).substring(2));
 
+    if (year > shortYear + 2 || year < shortYear) {
+      console.warn('Credit card month not valid.');
+      return;
+    }
 
-  
+    // TODO: Fixa månad, obs. "padStart" med 0
+    
+    // Check card CVC
+    if (creditCardCvc.value.length !== 3) {
+      console.warn('CVC not valid.');
+      return;
+    }
+  }
+
+  orderBtn.removeAttribute('disabled');
+}
+

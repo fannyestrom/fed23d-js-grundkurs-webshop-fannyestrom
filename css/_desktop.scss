@@ -1,3 +1,10 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+}
+
+
 /* 
 ----------------------------------------------------
 ----------------------- header ---------------------
@@ -49,5 +56,124 @@
     .burger-menu {
         display: none;
         cursor: pointer;
+    }
+}
+
+
+/* 
+----------------------------------------------------
+----------------------- main page ---------------------
+----------------------------------------------------
+ */
+
+ main {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.first-page {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+
+    h1 {
+        grid-column: span 12;
+    }
+
+    .first-page-divider {
+        grid-column: span 12;
+    }
+}
+
+.sort-container {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+
+    .sort-products {
+        grid-column: 1;
+        display: flex;
+    }
+
+    .sort-name {
+        grid-column: 11;
+    }
+
+    .sort-price {
+        grid-column: 12;
+    }
+}
+
+.category-container {
+    grid-column: span 12;
+}
+
+.product-container {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    article {
+        grid-column: span 12;
+        flex-direction: row;
+
+        img {
+            width: 600px;
+            height: auto;
+        }
+    
+        .product-info {
+            grid-column: 5 / 9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            position: relative;
+            top: -15px;
+            font-family: 'Open Sans', sans-serif;
+    
+            .product-price {
+                padding: 5px 0;
+            }
+        
+            .product-rating {
+                padding: 5px 0;
+            }
+    
+            .product-category {
+                padding: 5px 0;
+            }
+        }
+    
+        .button-container {
+            position: relative;
+            bottom: 20px;
+    
+            .decrease {
+                font-size: 1.5rem;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .increase {
+                font-size: 1.5rem;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    
+        .product-amount {
+            grid-column: 2 / 4;
+            position: relative;
+            bottom: 50px;
+            padding: 10px 0;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.8rem;
+        }
     }
 }
