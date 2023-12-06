@@ -82,8 +82,14 @@
             </label>
         </div>
 
+
+        <!---------------------- product array container -------------------->
+
         <div class="product-container" id="container"></div>
         <div id="priceContainer"></div>
+
+
+        <!---------------------- shopping cart container -------------------->
 
         <div class="cart-container">
             <h3>Shopping Cart</h3>
@@ -140,7 +146,8 @@
 
             <span class="input-container">
                 <label for="discount-input">Discount code or gift card</label>
-                <input type="text" id="discount-input" name="discount-input" placeholder="Discount code or gift card">
+                <input type="text" id="discountInput" name="discount-input" placeholder="Discount code or gift card">
+                <button class="discount-button" id="discountButton">→</button>
             </span>
 
             <label>
@@ -152,7 +159,9 @@
                 <input type="checkbox" name="news-letter">
                 <span>Recieve news & offers via email!</span>
             </label>
-            
+
+            <!---------------------- payment options -------------------->
+
             <div class="payment-options">
                 <div class="selector">
                   <label>
@@ -190,7 +199,8 @@
                 </div>
               
                 <button class="order-button" id="orderBtn" disabled>Place order</button>
-              </div>
+            </div>
+        </form>  
 
 <script src="main.js"></script>
 </body>

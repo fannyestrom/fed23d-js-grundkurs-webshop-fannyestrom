@@ -1,4 +1,6 @@
-// burger menu
+/*
+* burger menu
+*/
 const burgerMenu = document.querySelector('.burger-menu');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -14,7 +16,9 @@ addEventListener('click', () => {
 }))
 
 
-// product array
+/*
+* product array
+*/
 const products = [
     {
         name: 'Chocolate Chip Cookie',
@@ -170,47 +174,29 @@ const products = [
 ];
 
 
+/*
+* containers
+*/
 const container = document.querySelector('#container');
 const shoppingCart = document.querySelector('#shoppingCart');
 const filterContainer = document.querySelector('#filterContainer');
 
 
-// increase & decrease buttons
-function decreaseAmount(e) {
-    const index = e.currentTarget.dataset.id;
-    if (products[index].amount <= 0) {
-        products[index].amount = 0;
-    } else {
-        products[index].amount -= 1;
-    }
-    printProducts();
-    printCartProducts();
-}
-
-function increaseAmount(e) {
-    const index = e.currentTarget.dataset.id;
-    products[index].amount += 1;
-    printProducts();
-    printCartProducts();
-}
-
-
-// print products
-// print products
+/*
+* display product array on website
+*/
 function printProducts() {
     container.innerHTML = '';
 
     products.forEach((product, index) => {
-        const discountedPrice = calculateDiscountedPrice(product.price);
 
-        const subtotal = product.amount * discountedPrice;
-
+        // layout for how the product objects display on the website initially
         container.innerHTML += `
             <article>
                 <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
                 <h2 class="product-heading">${product.name}</h2>
                 <div class="product-info">
-                    <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
+                    <div class="product-price">Price: <span>${product.price}</span> SEK</div> 
                     <div class="product-rating">Rating: <span>${product.rating}</span></div>
                     <div class="product-category">Category: <span>${product.category}</span></div>
                 </div>
@@ -239,115 +225,91 @@ function printProducts() {
     printCartProducts();
 }
 
-// function to calculate the surcharge
-function calculateSurcharge(originalSubtotal) {
-    // check if the surcharge is applicable (friday 3pm - monday 3am)
-    if (hasWeekendSurcharge()) {
-        const surchargePercentage = 0.15;
-        const surchargeAmount = originalSubtotal * surchargePercentage;
-        const totalWithSurcharge = originalSubtotal + surchargeAmount;
-
-        return totalWithSurcharge;
+/*
+* increase & decrease buttons
+*/ 
+function decreaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    if (products[index].amount <= 0) {
+        products[index].amount = 0;
+    } else {
+        products[index].amount -= 1;
     }
-
-    // if surcharge is not applicable, return the original subtotal
-    return originalSubtotal;
+    printProducts();
+    printCartProducts();
 }
 
-
-// define surchargeAmount as a global variable
-let surchargeAmount = 0;
-
-
-// print in-cart products
-// print in-cart products with discount information
-function printCartProducts() {
-    shoppingCart.innerHTML = '';
-  
-    let sum = 0;
-    let discountApplied = false;
-  
-    products.forEach((product) => {
-      if (product.amount > 0) {
-        const originalSubtotal = product.amount * product.price;
-
-        // calculate the discounted or surcharged subtotal
-        const subtotal = calculateDiscountedPrice(originalSubtotal);
-  
-        // check if the surcharge is applicable
-        const surchargeSubtotal = hasWeekendSurcharge()
-          ? calculateSurcharge(originalSubtotal)
-          : originalSubtotal;
-  
-        sum += subtotal; // accumulate the discounted or surcharged subtotal
-  
-        shoppingCart.innerHTML += `
-          <article class="cart-summary">
-            <span>${product.name}</span> | <span>x${product.amount}</span> | 
-            <span>${calculateDiscountedPrice(originalSubtotal)} SEK</span>
-          </article>`;
-  
-        // check if the discount is applied to at least one product in the cart
-        if (originalSubtotal !== subtotal) {
-            discountApplied = true;
-        }
-      }
-    });
-
-    // display monday discount information in shoppingCart
-    if (isMondayBetween3AMand10AM() && discountApplied) {
-      shoppingCart.innerHTML += `
-        <p class="discount-info">Monday discount: 10% off the entire order!</p>`;
-    } 
-  
-    shoppingCart.innerHTML += `
-      <p class="total-sum">Subtotal: ${sum} SEK</p>`;
+function increaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    products[index].amount += 1;
+    printProducts();
+    printCartProducts();
 }
 
-// check if it's Monday between 3 AM and 10 AM
-function isMondayBetween3AMand10AM() {
-    const testDate = new Date('2023-12-04T09:00:00'); 
-    const dayOfWeek = testDate.getDay();
-    const hour = testDate.getHours();
-    
-    /*
-    const currentDate = new Date();
-
-    const dayOfWeek = currentDate.getDay();
-    const hour = currentDate.getHours();
-    */
-    return dayOfWeek === 1 && hour >= 3 && hour < 10;
-}
-
-// check if there is a surcharge on the weekend
-function hasWeekendSurcharge() {
-    const currentDate = new Date();
-    const dayOfWeek = currentDate.getDay();
-    const hour = currentDate.getHours();
-
-    return (dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3);
-}
-  
-// call the function to print in-cart products 
-printCartProducts();
-  
 
 /* 
-sort products by different categories 
+* sort products by different categories 
 */
+// update the click event listeners for sorting by category
 
+// sort by Name
+function sortProductsByName() {
+    products.sort((a, b) => a.name.localeCompare(b.name));
+    printProducts();
+}
+
+const sortNameButton = document.querySelector('#sortNameButton');
+sortNameButton.addEventListener('click', sortProductsByName);
+
+
+// sort by Price
+function sortProductsByPrice() {
+    products.sort((a, b) => a.price - b.price);
+    printProducts();
+}
+
+const sortPriceButton = document.querySelector('#sortPriceButton');
+sortPriceButton.addEventListener('click', sortProductsByPrice);
+
+
+// sort by 'Vegan'
+const sortVeganButton = document.querySelector('#sortVeganButton');
+
+sortVeganButton.addEventListener('click', () => {
+    const veganProducts = products.filter(product => product.category === 'Vegan');
+    displayProducts(veganProducts);
+});
+
+
+// sort by 'Gluten-free'
+const sortGlutenFreeButton = document.querySelector('#sortGlutenFreeButton');
+
+sortGlutenFreeButton.addEventListener('click', () => {
+    const glutenFreeProducts = products.filter(product => product.category === 'Gluten-free');
+    displayProducts(glutenFreeProducts);
+});
+
+
+// sort by 'May contain traces of nuts'
+const sortNutsButton = document.querySelector('#sortNutsButton');
+
+sortNutsButton.addEventListener('click', () => {
+    const nutsProducts = products.filter(product => product.category === 'May contain traces of nuts');
+    displayProducts(nutsProducts);
+});
+
+// display the filtered products
 function displayProducts(filteredProducts) {
     container.innerHTML = '';
 
     filteredProducts.forEach((product, index) => {
-        const discountedPrice = calculateDiscountedPrice(product.price);
 
         container.innerHTML += `
             <article>
                 <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
                 <h2 class="product-heading">${product.name}</h2>
                 <div class="product-info">
-                    <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
+                    <div class="product-price">Price: <span>${product.price}</span> SEK</div>
                     <div class="product-rating">Rating: <span>${product.rating}</span></div>
                     <div class="product-category">Category: <span>${product.category}</span></div>
                 </div>
@@ -371,112 +333,105 @@ function displayProducts(filteredProducts) {
     increaseBtn.forEach(btn => {
         btn.addEventListener('click', increaseAmount);
     });
-
-    // Update the shopping cart with the filtered products
-    printCartProducts();
 }
 
-// Update the click event listeners for sorting by category
-const sortVeganButton = document.querySelector('#sortVeganButton');
-sortVeganButton.addEventListener('click', () => {
-    const veganProducts = products.filter(product => product.category === 'Vegan');
-    displayProducts(veganProducts);
-});
 
-const sortGlutenFreeButton = document.querySelector('#sortGlutenFreeButton');
-sortGlutenFreeButton.addEventListener('click', () => {
-    const glutenFreeProducts = products.filter(product => product.category === 'Gluten-free');
-    displayProducts(glutenFreeProducts);
-});
-
-const sortNutsButton = document.querySelector('#sortNutsButton');
-sortNutsButton.addEventListener('click', () => {
-    const nutsProducts = products.filter(product => product.category === 'May contain traces of nuts');
-    displayProducts(nutsProducts);
-});
-
-
-
-/* 
-10% off on Mondays before 10 am
-15% surcharge on Fridays after 3 pm to Monday 3 am
+/*
+* print products to shopping cart with order summary and subtotal
 */
+function printCartProducts() {
+    shoppingCart.innerHTML = '';
 
-// Function to calculate the discounted price
-function calculateDiscountedPrice(originalPrice) {
+    let originalSubtotal = 0;
+  
+    products.forEach((product) => {
+        if (product.amount > 0) {
+            const addedProductsSubtotal = product.amount * product.price;
+            originalSubtotal += addedProductsSubtotal;
+
+            // shopping cart content and how it displays on the website
+            shoppingCart.innerHTML += `
+            <article class="cart-summary">
+                <span>${product.name}</span> | <span>x${product.amount}</span> | 
+                <span>${addedProductsSubtotal} SEK</span>
+            </article>`;
+        }
+    });
+
     
-    const testDate = new Date('2023-12-04T09:00:00'); 
-    const dayOfWeek = testDate.getDay();
-    const hour = testDate.getHours();
+    // print shopping cart sum without discounts or surcharge
+    shoppingCart.innerHTML += `
+    <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
     
-    /*
-    const currentDate = new Date();
-    const dayOfWeek = currentDate.getDay();
-    const hour = currentDate.getHours();
-    */
+
+    // check if it's Monday between 3 AM and 10 AM
+    function isMondayBetween3AMand10AM() {
+        const testDate = new Date('2023-12-06T09:00:00'); 
+        const dayOfWeek = testDate.getDay();    
+        const hour = testDate.getHours();
     
-    // Apply 10% discount on Mondays between 3 AM and 10 AM
-    if (dayOfWeek === 1 && hour >= 3 && hour < 10) {
-        return Math.round(originalPrice * 0.9);
+        /*
+        const currentDate = new Date();
+        const dayOfWeek = currentDate.getDay();
+        const hour = currentDate.getHours();
+        */
+
+        return dayOfWeek === 1 && hour >= 3 && hour < 10;
     }
 
-    // Apply 15% weekend surcharge on Fridays after 3 PM to Monday 3 AM
-    if ((dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3)) {
-        return Math.round(originalPrice * 1.15);
+    // display monday discount information in shopping cart
+    if (isMondayBetween3AMand10AM()) {
+        shoppingCart.innerHTML += `
+        <p class="discount-info">Monday discount: 10% off the entire order!</p>`;
+        
+        // calculate the discounted price
+        originalSubtotal = Math.round(originalSubtotal * 0.9);
+
+        // update the displayed subtotal with the modified value
+        shoppingCart.innerHTML += `
+        <p class="total-sum">Discounted subtotal: ${originalSubtotal} SEK</p>`;
     }
 
-    // No discount or surcharge
-    return originalPrice;
-}
-  
 
-// print products with discounts
-function printProductsWithDiscount() {
-    container.innerHTML = '';
-  
-    products.forEach((product, index) => {
-      const discountedPrice = calculateDiscountedPrice(product.price);
+    // check if it's between Friday 15 PM and Monday 3 AM
+    function hasWeekendSurcharge() {
+        /*
+        const testDate = new Date('2023-12-07T16:00:00'); 
+        const dayOfWeek = testDate.getDay();    
+        const hour = testDate.getHours();
+        */
+        
+        const currentDate = new Date();
+        const dayOfWeek = currentDate.getDay();
+        const hour = currentDate.getHours();
+        
+        return (dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3);
+        
+    }
 
-      const subtotal = product.amount * discountedPrice;
-      const discountedSubtotal = calculateDiscountedPrice(subtotal);
-  
-      container.innerHTML += `
-        <article>
-            <img src="${product.img.src}" alt="" width="" height="" loading="lazy">
-            <h2 class="product-heading">${product.name}</h2>
-            <div class="product-info">
-                <div class="product-price">Price: <span>${discountedPrice}</span> SEK</div>
-                <div class="product-rating">Rating: <span>${product.rating}</span></div>
-                <div class="product-category">Category: <span>${product.category}</span></div>
-            </div>
-            <div class="button-container">
-                <button class="decrease" data-id="${index}">-</button>
-                <button class="increase" data-id="${index}">+</button>
-            </div>
-            <div class="product-amount">Amount: <span>x${product.amount}</span></div>
-            ${product.amount > 0 ? `<div class="product-subtotal">Subtotal: <span>${discountedSubtotal} SEK</span></div>` : ''}
-        </article>
-        <div class="divider"></div>
-      `;
-    });
-  
-    const decreaseBtn = document.querySelectorAll('button.decrease');
-    const increaseBtn = document.querySelectorAll('button.increase');
-  
-    decreaseBtn.forEach((btn) => {
-      btn.addEventListener('click', decreaseAmount);
-    });
-  
-    increaseBtn.forEach((btn) => {
-      btn.addEventListener('click', increaseAmount);
-    });
-  
-    // call function to print the shopping cart products
-    printCartProducts();
+    // display surcharge in shopping cart
+    if (hasWeekendSurcharge()) {
+        // calculate the surcharged price
+        originalSubtotal = Math.round(originalSubtotal * 1.15);
+
+        // update the displayed subtotal with the modified value
+        shoppingCart.innerHTML += `
+        <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
+    }
+
+    const discountInput = document.querySelector('#discountInput');
+    const discountButton = document.querySelector('#discountButton');
+    discountButton.addEventListener('click', addDiscountCode)
+
+    function addDiscountCode() {
+        if (discountInput.value === 'discount') {
+            originalSubtotal -= 10;
+            printCartProducts(); // update the displayed subtotal
+        }
+    }
+
+    return originalSubtotal;
 }
-  
-// function to print products with discounts 
-printProductsWithDiscount();
 
 
 /*
@@ -495,14 +450,14 @@ const invoiceOption = document.querySelector('#invoice');
 const cardOption = document.querySelector('#card');
 const orderBtn = document.querySelector('#orderBtn');
 
-// Default options
+// default options
 let selectedPaymentOption = 'card';
 
 // REGEX
 const personalIdRegEx = new RegExp(/^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/);
 const creditCardNumberRegEx = new RegExp(/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/); // MasterCard
 
-// Add event listeners
+// add event listeners
 inputs.forEach(input => {
   input.addEventListener('focusout', activateOrderButton);
   input.addEventListener('change', activateOrderButton);
@@ -512,9 +467,9 @@ cardInvoiceRadios.forEach(radioBtn => {
   radioBtn.addEventListener('change', switchPaymentMethod);
 });
 
-/**
- * Switches between invoice payment method and
- * card payment method. Toggles their visibility.
+/*
+ * switches between invoice payment method and
+ * card payment method. toggles visibility.
  */
 function switchPaymentMethod(e) {
   invoiceOption.classList.toggle('hidden');
@@ -527,9 +482,8 @@ function isPersonalIdNumberValid() {
   return personalIdRegEx.exec(personalId.value);
 }
 
-/**
- * Activate order button if all fields are
- * correctly filled.
+/*
+ * activate order button if all fields are correctly filled.
  */
 function activateOrderButton() {
   orderBtn.setAttribute('disabled', '');
@@ -539,13 +493,13 @@ function activateOrderButton() {
   }
   
   if (selectedPaymentOption === 'card') {
-    // Check card number
+    // check card number
     if (creditCardNumberRegEx.exec(creditCardNumber.value) === null) {
       console.warn('Credit card number not valid.');
       return;
     }
 
-    // Check card year
+    // check card year
     let year = Number(creditCardYear.value);
     const today = new Date();
     const shortYear = Number(String(today.getFullYear()).substring(2));
@@ -555,9 +509,9 @@ function activateOrderButton() {
       return;
     }
 
-    // TODO: Fixa månad, obs. "padStart" med 0
+    // month, "padStart" med 0
     
-    // Check card CVC
+    // check card CVC
     if (creditCardCvc.value.length !== 3) {
       console.warn('CVC not valid.');
       return;
@@ -567,3 +521,7 @@ function activateOrderButton() {
   orderBtn.removeAttribute('disabled');
 }
 
+
+printProducts();
+
+printCartProducts();
