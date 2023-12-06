@@ -27,7 +27,7 @@ const products = [
         category: 'May contain traces of nuts',
         amount: 0,
         img: {
-            src: 'images/chocolate chip cookie.png',
+            src: 'images/chocolate_chip_cookie.png',
             width: 100,
             height: 100,
             alt: 'Three chocolate chip cookies',
@@ -72,7 +72,7 @@ const products = [
         category: 'Vegan',
         amount: 0,
         img: {
-            src: 'images/caramel cheesecake.png',
+            src: 'images/caramel_cheesecake.png',
             width: 100,
             height: 100,
             alt: 'Caramel cheesecake',
@@ -87,7 +87,7 @@ const products = [
         category: 'Vegan',
         amount: 0,
         img: {
-            src: 'images/carrot cake.png',
+            src: 'images/carrot_cake.png',
             width: 100,
             height: 100,
             alt: 'Two layered carrot cake',
@@ -102,7 +102,7 @@ const products = [
         category: 'May contain traces of nuts',
         amount: 0,
         img: {
-            src: 'images/chocolate glazed brownie.png',
+            src: 'images/chocolate_glazed_brownie.png',
             width: 100,
             height: 100,
             alt: 'Chocolate glazed brownie',
@@ -133,7 +133,7 @@ const products = [
         category: 'Gluten-free',
         amount: 0,
         img: {
-            src: 'images/cinnamon roll.png',
+            src: 'images/cinnamon_roll.png',
             width: 100,
             height: 100,
             alt: 'Cinnamon roll with frosting',
