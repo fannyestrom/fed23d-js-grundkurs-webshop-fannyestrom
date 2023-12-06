@@ -225,6 +225,62 @@ function printProducts() {
     printCartProducts();
 }
 
+
+/*
+* 15 minute timer
+*/
+let timer;
+let remainingTime = 900; // 15 minutes in seconds
+
+// function to update the countdown display
+function updateCountdown() {
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = remainingTime % 60;
+    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // update the content of the countdownTimer div
+    document.getElementById('countdownTimer').innerText = `Shopping cart empties in: ${formattedTime}`;
+}
+
+// function to start or reset the timer
+function startTimer() {
+    // clear existing timer if any
+    clearTimeout(timer);
+
+    // set a new timer for 1 second
+    timer = setInterval(() => {
+        // update the remaining time
+        remainingTime--;
+
+        // update the countdown display
+        updateCountdown();
+
+        // check if the timer has reached 0
+        if (remainingTime <= 0) {
+            // timer expired, reset the amount of products and empty the shopping cart
+            products.forEach(product => {
+                product.amount = 0;
+            });
+
+            printProducts();
+            printCartProducts();
+
+            // Clear form values
+            document.getElementById('customerForm').reset();
+
+            // Clear the countdown display
+            document.getElementById('countdownTimer').innerText = 'Sorry! Shopping cart emptied, try to be faster next time!';
+            
+            // Clear the interval to stop the timer
+            clearInterval(timer);
+        }
+    }, 1000); // 1 second in milliseconds
+}
+
+// call the updateCountdown function initially to display the initial countdown
+updateCountdown();
+
+
 /*
 * increase & decrease buttons
 */ 
@@ -244,6 +300,9 @@ function increaseAmount(e) {
     products[index].amount += 1;
     printProducts();
     printCartProducts();
+
+    // start or reset the timer when the increase button is clicked
+    startTimer();
 }
 
 
