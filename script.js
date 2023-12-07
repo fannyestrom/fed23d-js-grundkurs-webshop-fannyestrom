@@ -478,15 +478,15 @@ function printCartProducts() {
         <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
     }
 
-    const discountInput = document.querySelector('#discountInput');
+
     const discountButton = document.querySelector('#discountButton');
     discountButton.addEventListener('click', addDiscountCode)
 
-    function addDiscountCode() {
-        if (discountInput.value === 'discount') {
-            originalSubtotal -= 10;
-            printCartProducts(); // update the displayed subtotal
-        }
+    if (addDiscountCode()) {
+        originalSubtotal = Math.round(originalSubtotal - 10);
+
+        shoppingCart.innerHTML += `
+        <p class="discount-text">Discount code applied!</p>`;
     }
 
     return originalSubtotal;
@@ -581,6 +581,6 @@ function activateOrderButton() {
 }
 
 
-printProducts();
+printProducts(); 
 
 printCartProducts();

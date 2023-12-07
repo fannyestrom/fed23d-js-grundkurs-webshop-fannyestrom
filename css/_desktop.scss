@@ -95,21 +95,58 @@ body {
     gap: 10px;
 
     .sort-products {
-        grid-column: 1;
+        grid-column: 8 / 10;
         display: flex;
     }
 
     .sort-name {
         grid-column: 11;
+        position: relative;
+        left: -25px;
     }
 
     .sort-price {
         grid-column: 12;
+        position: relative;
+        left: -25px;
     }
 }
 
 .category-container {
-    grid-column: span 12;
+    grid-column: 7 / 13;
+
+    .category-labels {
+
+        .sort-vegan-button {
+            position: relative;
+            right: -55px;
+        }
+
+        .sort-vegan-text {
+            position: relative;
+            right: -55px;
+        }
+
+        .sort-gluten-free-button {
+            position: relative;
+            right: -15px;
+        }
+
+        .sort-gluten-free-text {
+            position: relative;
+            right: -15px;
+        }
+
+        .sort-nuts-button {
+            position: relative;
+            left: -25px;
+        }
+
+        .sort-nuts-text {
+            position: relative;
+            left: -25px;
+        }
+    }
 }
 
 .product-container {
@@ -120,21 +157,32 @@ body {
 
     article {
         grid-column: span 12;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
         flex-direction: row;
 
         img {
+            grid-column: 1 / 5;
             width: 600px;
             height: auto;
         }
+
+        .product-heading {
+            grid-column: 6 / 12;
+            position: relative;
+            left: -60px;
+        }
     
         .product-info {
-            grid-column: 5 / 9;
+            grid-column: 6 / 13;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
             position: relative;
-            top: -15px;
+            top: -240px;
+            left: -60px;
             font-family: 'Open Sans', sans-serif;
     
             .product-price {
@@ -151,6 +199,7 @@ body {
         }
     
         .button-container {
+            grid-column: 7;
             position: relative;
             bottom: 20px;
     
@@ -176,4 +225,175 @@ body {
             font-size: 0.8rem;
         }
     }
+
+    .divider {
+        grid-column: span 12;
+    }
 }
+
+
+.cart-container {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+    
+    h3 {
+        grid-column: 1 / 11;
+        font-size: 1.8rem;
+        padding: 45px 0px 20px 10px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .timer {
+        grid-column: 11 / 13;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 0.8rem;
+    }
+
+    h4 {
+        grid-column: span 12;
+        padding: 15px 0 15px 10px;
+    }
+
+    p {
+        padding: 0 0 15px 10px;
+    }
+
+    .shopping-cart {
+        grid-column: span 12;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+
+        .cart-summary {
+            grid-column: span 12;
+            padding: 0 0 15px 10px;
+        }
+    
+        .discount-info {
+            grid-column: span 12;
+        }
+
+        .total-sum {
+            grid-column: span 12;
+        }
+    }
+}
+
+.customer-form {
+    grid-column: 1 / 6;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+    padding: 40px 20px 0 20px;
+
+    h5 {
+        font-size: 1.7rem;
+        position: relative;
+        left: -3px;
+        margin-bottom: 20px;
+    }
+
+    .input-container {
+        grid-column: span 12;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            border-radius: 4px;
+            border: 1px solid black;
+            padding: 8px 5px;
+        }
+    }
+
+    .discount-container {
+        grid-column: span 12;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 30px;
+
+        .discount-label {
+            grid-column: span 3;
+        }
+
+        .discount-input {
+            grid-column: span 2;
+            width: 195px;
+            border-radius: 4px;
+            border: 1px solid black;
+            padding: 8px 5px;
+        }
+
+        .discount-button {
+            position: relative;
+            left: -87px;
+            font-size: 1.5rem;
+            background-color: rgb(255, 192, 227);
+            border: none;
+            border-radius: 8px;
+            width: 40px;
+            cursor: pointer;
+        }
+    }
+
+    .form-checkboxes {
+        grid-column: 1 / 6;
+        margin: 5px 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .payment-options {
+        grid-column: span 6 / 13;
+        margin-top: 30px;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        transform: translate(-50%, -50%);
+        background-color: rgb(210, 231, 231);
+        border-radius: 8px;
+        padding: 8px;
+        border: 1px solid #262626;
+
+        .order-button {
+            padding: 8px 16px;
+            font-size: 1.2rem;
+            background-color: rgb(255, 192, 227);
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            &:disabled {
+                background-color: #b5b5b5;
+                cursor: not-allowed;
+            }
+        }
+
+        .selector {
+            margin-block: 16px;
+            text-align: center;
+        }
+        
+        input.small {
+            width: 80px;
+        }
+        
+          .card, .invoice {
+            label {
+              display: flex;
+              gap: 8px;
+              margin-block: 8px;
+              align-items: center;
+              justify-content: space-between;
+            }
+          }
+        
+    }
+}
+
+
