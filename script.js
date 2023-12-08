@@ -304,23 +304,33 @@ function increaseAmount(e) {
 // update the click event listeners for sorting by category
 
 // sort by Name
+const sortNameButton = document.querySelector('#sortNameButton');
+sortNameButton.addEventListener('click', sortProductsByName);
+
 function sortProductsByName() {
     products.sort((a, b) => a.name.localeCompare(b.name));
     printProducts();
 }
 
-const sortNameButton = document.querySelector('#sortNameButton');
-sortNameButton.addEventListener('click', sortProductsByName);
-
 
 // sort by Price
+const sortPriceButton = document.querySelector('#sortPriceButton');
+sortPriceButton.addEventListener('click', sortProductsByPrice);
+
 function sortProductsByPrice() {
     products.sort((a, b) => a.price - b.price);
     printProducts();
 }
 
-const sortPriceButton = document.querySelector('#sortPriceButton');
-sortPriceButton.addEventListener('click', sortProductsByPrice);
+
+// sort by Rating
+const sortRatingButton = document. querySelector('#sortRatingButton');
+sortRatingButton.addEventListener('click', sortProductsByRating);
+
+function sortProductsByRating() {
+    products.sort((a, b) => a.rating - b.rating);
+    printProducts();
+}
 
 
 // sort by 'Vegan'
