@@ -291,7 +291,7 @@ function increaseAmount(e) {
     const index = e.currentTarget.dataset.id;
     products[index].amount += 1;
   
-    // visibility of the popup
+    // visibility of add to cart popup
     const popup = document.querySelector('#popup');
     popup.style.display = 'block';
   
@@ -407,13 +407,15 @@ function displayProducts(filteredProducts) {
 }
 
 
+let originalSubtotal = 0;
+
 /*
 * print products to shopping cart with order summary and subtotal
 */
 function printCartProducts() {
     shoppingCart.innerHTML = '';
 
-    let originalSubtotal = 0;
+    originalSubtotal = 0;
   
     products.forEach((product) => {
         if (product.amount > 0) {
@@ -490,16 +492,39 @@ function printCartProducts() {
         <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
     }
 
-
+    // Event listener for discount button
     const discountButton = document.querySelector('#discountButton');
-    discountButton.addEventListener('click', addDiscountCode)
+    discountButton.addEventListener('click', addDiscountCode);
 
-    if (addDiscountCode()) {
-        originalSubtotal = Math.round(originalSubtotal - 10);
+    function addDiscountCode() {
+        const discountInput = document.getElementById('discountInput').value;
 
-        shoppingCart.innerHTML += `
-        <p class="discount-text">Discount code applied!</p>`;
+        // Clear existing discount messages
+        document.querySelectorAll('.discount-text').forEach(message => message.remove());
+
+        // Check if the entered discount code is valid
+        if (discountInput === 'discount') {
+            // Apply the discount directly to originalSubtotal
+            const discountAmount = 10;
+
+            // Update the displayed subtotal with the modified value
+            printCartProducts(discountAmount);
+
+            // update the displayed subtotal with the modified value
+            shoppingCart.innerHTML += `
+            <p class="total-sum">Updated subtotal with discount code: ${originalSubtotal - 10} SEK</p>`;
+
+            // Display the discount code applied message
+            shoppingCart.innerHTML += `<p class="discount-text">Discount code applied! -${discountAmount} SEK</p>`;
+        } else {
+            // Invalid discount code
+            console.log('Invalid discount code');
+
+            // Display the invalid discount code message
+            shoppingCart.innerHTML += `<p class="discount-text">Invalid discount code!</p>`;
+        }
     }
+
 
     return originalSubtotal;
 }
