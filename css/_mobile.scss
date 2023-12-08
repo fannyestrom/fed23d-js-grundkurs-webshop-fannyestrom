@@ -265,6 +265,38 @@ main {
     }
 }
 
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+  
+    opacity: 0;
+    animation: fadeInOut 2s ease-out;
+}
+  
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+
 .cart-container {
     grid-column: span 4;
     display: grid;

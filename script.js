@@ -290,12 +290,22 @@ function decreaseAmount(e) {
 function increaseAmount(e) {
     const index = e.currentTarget.dataset.id;
     products[index].amount += 1;
-    printProducts();
-    printCartProducts();
-
+  
+    // visibility of the popup
+    const popup = document.querySelector('#popup');
+    popup.style.display = 'block';
+  
+    // hide the popup after a short delay
+    setTimeout(() => {
+      popup.style.display = 'none';
+    }, 1300); // adjust the delay (in milliseconds) as needed
+  
     // start or reset the timer when the increase button is clicked
     startTimer();
-}
+
+    printProducts();
+    printCartProducts();
+}  
 
 
 /* 
@@ -427,7 +437,7 @@ function printCartProducts() {
 
     // check if it's Monday between 3 AM and 10 AM
     function isMondayBetween3AMand10AM() {
-        const testDate = new Date('2023-12-06T09:00:00'); 
+        const testDate = new Date('2023-12-04T09:00:00'); 
         const dayOfWeek = testDate.getDay();    
         const hour = testDate.getHours();
     
