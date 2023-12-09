@@ -12,9 +12,6 @@ body {
 
 header {
     grid-column: span 8;
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 10px;
 }
 
 
@@ -39,6 +36,21 @@ main {
 
     h1 {
         grid-column: span 8;
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 10px;
+
+        .welcome {
+            grid-column: span 8;
+        }
+
+        .h1-linebreak {
+            grid-column: span 8;
+        }
+
+        .cafe-c {
+            grid-column: span 8;
+        }
     }
 
     .first-page-divider {
@@ -46,18 +58,31 @@ main {
     }
 }
 
+
 .sort-container {
     grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
 
     .sort-products {
-        grid-column: 1;
+        grid-column: span 2;
+    }
+
+    .sort-name, .sort-price, .sort-rating {
+        position: relative;
+        left: -20px;
     }
 
     .sort-name {
-        grid-column: 7;
+        grid-column: 6;
     }
 
     .sort-price {
+        grid-column: 7;
+    }
+
+    .sort-rating {
         grid-column: 8;
     }
 }
@@ -75,22 +100,46 @@ main {
     article {
         grid-column: span 8;
 
+        img {
+            width: 450px;
+        }
+
+        .product-heading {
+            position: relative;
+            bottom: 20px;
+        }
+
+        .product-info {
+            position: relative;
+            bottom: 40px;
+        }
+
         .button-container {
+            position: relative;
+            bottom: 10px;
 
             .decrease {
                 width: 50px;
                 height: 50px;
+                margin: 0 5px;
             }
 
             .increase {
                 width: 50px;
                 height: 50px;
+                margin: 0 5px;
             }
+        }
+
+        .product-amount {
+            grid-column: 4 / 6;
+            position: relative;
+            bottom: 20px;
         }
     }
 
     .divider {
-        grid-column: 1 / 9;
+        grid-column: span 8;
     }
 }
 
@@ -99,38 +148,75 @@ main {
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 10px;
+    margin-left: 10px;
 
     h3 {
-        grid-column: 1 / 9;
+        grid-column: 1 / 6;
         font-size: 2rem;
+    }
+
+    .timer {
+        grid-column: 6 / 9;
+        position: relative;
+        left: 80px;
+        font-size: 1rem;
     }
 
     h4 {
         grid-column: 1 / 9;
         padding: 15px 0 15px 10px;
     }
-}
 
-.shopping-cart {
-    grid-column: span 8;
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 10px;
-
-    .cart-summary {
-        grid-column: 1 / 4;
+    .shopping-cart {
+        grid-column: span 8;
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 10px;
+    
+        .cart-summary {
+            grid-column: 1 / 9;
+        }
+    
+        .total-sum {
+            grid-column: 1 / 3;
+        }
     }
 
-    .total-sum {
-        grid-column: 1;
+    .discount-container {
+        grid-column: span 8;
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 10px;
+        margin-left: 10px;
+
+        .discount-label {
+            grid-column: span 8;
+        }
+
+        .discount-input {
+            grid-column: span 3;
+            width: 220px;
+        }
+
+        .discount-button {
+            grid-column: 4;
+            position: relative;
+            left: -40px;
+            font-size: 1.7rem;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
     }
 }
+
 
 .customer-form {
-    grid-column: 2 / 8;
+    grid-column: 1 / 9;
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 10px;
+    margin: 40px 0 10px 10px;
 
     h5 {
         font-size: 2rem;
@@ -138,11 +224,10 @@ main {
 
     .input-container {
         grid-column: span 8;
+    }
 
-        input {
-            border-radius: 4px;
-            padding: 8px 5px;
-        }
+    .form-checkboxes {
+        grid-column: span 8;
     }
 
     .payment-options {
