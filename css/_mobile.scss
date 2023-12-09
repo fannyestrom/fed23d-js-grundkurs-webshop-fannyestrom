@@ -382,6 +382,41 @@ main {
 }
 
 
+#orderSummary {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 600px;
+    background-color: rgb(255, 231, 244);
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    display: block;
+
+    .order-summary-heading {
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .summary-subheadings {
+        font-family: 'Montserrat', sans-serif;
+        margin: 15px 0 10px 0;
+    }
+
+
+}
+
+#orderSummary.hidden {
+    display: none;
+}
+
+
 .customer-form {
     grid-column: span 4;
     display: grid;

@@ -439,15 +439,15 @@ function printCartProducts() {
 
     // check if it's Monday between 3 AM and 10 AM
     function isMondayBetween3AMand10AM() {
+        /*
         const testDate = new Date('2023-12-04T09:00:00'); 
         const dayOfWeek = testDate.getDay();    
         const hour = testDate.getHours();
+        */
     
-        /*
         const currentDate = new Date();
         const dayOfWeek = currentDate.getDay();
         const hour = currentDate.getHours();
-        */
 
         return dayOfWeek === 1 && hour >= 3 && hour < 10;
     }
@@ -516,6 +516,9 @@ function printCartProducts() {
 
             // Display the discount code applied message
             shoppingCart.innerHTML += `<p class="discount-text">Discount code applied! -${discountAmount} SEK</p>`;
+
+            // add discount code value to orderSummary
+            updateOrderPopupContent(originalSubtotal, discountInput);
         } else {
             // Invalid discount code
             console.log('Invalid discount code');
@@ -584,6 +587,8 @@ function isPersonalIdNumberValid() {
 function activateOrderButton() {
   orderBtn.setAttribute('disabled', '');
 
+  
+
   if (selectedPaymentOption === 'invoice' && !isPersonalIdNumberValid()) {
     return;
   }
@@ -601,7 +606,7 @@ function activateOrderButton() {
     const shortYear = Number(String(today.getFullYear()).substring(2));
 
     if (year > shortYear + 2 || year < shortYear) {
-      console.warn('Credit card month not valid.');
+      console.warn('Credit card year not valid.');
       return;
     }
 
@@ -615,6 +620,63 @@ function activateOrderButton() {
   }
 
   orderBtn.removeAttribute('disabled');
+}
+
+
+/*
+* order summary popup
+*/
+// Add a click event listener to the existing order button
+document.querySelector('#orderBtn').addEventListener('click', function (event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Display the order summary
+    displayOrderSummary();
+});
+
+
+function displayOrderSummary() {
+    console.log('Displaying order summary...');
+
+    updateOrderPopupContent(originalSubtotal);
+
+    const orderSummary = document.getElementById('orderSummary');
+    orderSummary.classList.remove('hidden');
+}
+
+function updateOrderPopupContent(subtotal) {
+    const orderSummary = document.getElementById('orderSummary');
+    const cartProducts = products.filter(product => product.amount > 0);
+    
+    // Gather information about the customer from the form
+    const customerInfo = {
+        firstName: document.getElementById('firstname').value,
+        lastName: document.getElementById('lastname').value,
+        email: document.getElementById('email').value,
+        street: document.getElementById('street').value,
+        passcode: document.getElementById('passcode').value,
+        postalcode: document.getElementById('postalcode').value,
+        city: document.getElementById('city').value,
+        tel: document.getElementById('tel').value,
+    };
+
+    orderSummary.innerHTML = '';
+
+    orderSummary.innerHTML = `
+        <h2 class="order-summary-heading">Order Summary</h2>
+        <h3 class="summary-subheadings">Customer information:</h3>
+        <p><strong>Name:</strong> ${customerInfo.firstName} ${customerInfo.lastName}</p>
+        <p><strong>Email:</strong> ${customerInfo.email}</p>
+        <p><strong>Address:</strong> ${customerInfo.street}, ${customerInfo.postalcode} ${customerInfo.city}</p>
+        <p><strong>Phone:</strong> ${customerInfo.tel}</p>
+        <h3 class="summary-subheadings">Products ordered:</h3>
+        ${cartProducts.map(product => `<p>${product.name} - x${product.amount} - ${product.price} SEK</p>`).join('')}
+        <h4>Discount code:</h3>
+        <p>${discountInput.value} -10 SEK</p>
+        <h3 class="summary-subheadings">Subtotal:</h3>
+        <p>${subtotal} SEK</p>
+    `;
 }
 
 
