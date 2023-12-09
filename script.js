@@ -661,6 +661,10 @@ function updateOrderPopupContent(subtotal) {
         tel: document.getElementById('tel').value,
     };
 
+    // estimated time of delivery
+    const now = new Date();
+    const deliveryTime = new Date(now.getTime() + 30 * 60000);
+
     orderSummary.innerHTML = '';
 
     orderSummary.innerHTML = `
@@ -676,6 +680,8 @@ function updateOrderPopupContent(subtotal) {
         <p>${discountInput.value} -10 SEK</p>
         <h3 class="summary-subheadings">Subtotal:</h3>
         <p>${subtotal} SEK</p>
+        <h3 class="summary-subheadings">Estimated Time of Delivery:</h3>
+        <p>${deliveryTime.toLocaleTimeString()}</p>
     `;
 }
 
