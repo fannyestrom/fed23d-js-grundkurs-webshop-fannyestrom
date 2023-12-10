@@ -293,7 +293,7 @@ function decreaseAmount(e) {
     }
 }
 
-// Add this function to calculate the new subtotal after decreasing the amount
+// function to calculate the new subtotal after decreasing the amount to under 800 SEK again
 function calculateNewSubtotal() {
     let newSubtotal = 0;
 
@@ -492,8 +492,9 @@ function printCartProducts() {
     
     // print shopping cart sum without discounts or surcharge
     shoppingCart.innerHTML += `
-    <p class="shipping-cost">Shipping Cost: ${shippingCost.toFixed(2)} SEK</p>
-    <p class="total-sum">Subtotal: ${originalSubtotal - over10Discount} SEK</p>`;
+    <p class="shipping-cost">Shipping: ${Math.round(shippingCost)} SEK</p>
+    <p class="product-sum">Price: ${Math.round(discountedSubtotal)} SEK</p>
+    <p class="subtotal">Subtotal: ${Math.round(discountedSubtotal + shippingCost)} SEK</p>`;
 
 
     updateRadioAvailability();
@@ -506,10 +507,11 @@ function printCartProducts() {
         const dayOfWeek = testDate.getDay();    
         const hour = testDate.getHours();
         */
-    
+        
         const currentDate = new Date();
         const dayOfWeek = currentDate.getDay();
         const hour = currentDate.getHours();
+        
 
         return dayOfWeek === 1 && hour >= 3 && hour < 10;
     }
@@ -520,11 +522,11 @@ function printCartProducts() {
         <p class="discount-info">Monday discount: 10% off the entire order!</p>`;
         
         // calculate the discounted price
-        originalSubtotal = Math.round(originalSubtotal * 0.9);
+        originalSubtotal = Math.round((discountedSubtotal + shippingCost) * 0.9);
 
         // update the displayed subtotal with the modified value
         shoppingCart.innerHTML += `
-        <p class="total-sum">Discounted subtotal: ${originalSubtotal} SEK</p>`;
+        <p class="product-sum">Discounted subtotal: ${Math.round((discountedSubtotal + shippingCost) * 0.9)} SEK</p>`;
     }
 
 
@@ -547,11 +549,11 @@ function printCartProducts() {
     // display surcharge in shopping cart
     if (hasWeekendSurcharge()) {
         // calculate the surcharged price
-        originalSubtotal = Math.round(originalSubtotal * 1.15);
+        originalSubtotal = Math.round(discountedSubtotal * 1.15);
 
         // update the displayed subtotal with the modified value
         shoppingCart.innerHTML += `
-        <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
+        <p class="surcharge-sum">Subtotal: ${Math.round((discountedSubtotal * 1.15) + shippingCost)} SEK</p>`;
     }
 
     // Event listener for discount button
@@ -574,7 +576,7 @@ function printCartProducts() {
 
             // update the displayed subtotal with the modified value
             shoppingCart.innerHTML += `
-            <p class="total-sum">Updated subtotal with discount code: ${originalSubtotal - 10} SEK</p>`;
+            <p class="subtotal">Updated subtotal with discount code: ${originalSubtotal - 10} SEK</p>`;
 
             // Display the discount code applied message
             shoppingCart.innerHTML += `<p class="discount-text">Discount code applied! -${discountAmount} SEK</p>`;
@@ -660,10 +662,11 @@ function activateOrderButton() {
 
 // invoice payment option not available when order is over 800 SEK
 function updateRadioAvailability() {
-
     if (originalSubtotal > 800) {
+        if (!invoiceRadio.checked) {
+            cardRadio.checked = true;
+        }
         invoiceRadio.setAttribute('disabled', 'true');
-        cardRadio.checked = true;
         invoiceSection.style.display = 'none';
         cardSection.style.display = 'block';
     } else {

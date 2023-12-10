@@ -340,15 +340,31 @@ main {
         .cart-summary {
             grid-column: span 4;
             padding: 0 0 15px 10px;
+            font-size: 0.9rem;
+        }
+
+        .shipping-cost {
+            font-size: 0.9rem;
+        }
+
+        .product-sum {
+            grid-column: span 4;
+            font-size: 0.9rem;
         }
     
         .discount-info {
             grid-column: span 4;
-            font-size: 1.1rem;
+            color: red;
         }
 
-        .total-sum {
+        .subtotal {
             grid-column: span 4;
+            text-decoration: underline;
+        }
+
+        .surcharge-sum {
+            grid-column: span 4;
+            text-decoration: underline;
         }
     }
 
