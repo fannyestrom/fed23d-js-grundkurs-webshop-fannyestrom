@@ -594,6 +594,28 @@ function printCartProducts() {
     return originalSubtotal;
 }
 
+// add a click event listener to the reset button
+const resetBtn = document.getElementById('resetBtn');
+resetBtn.addEventListener('click', resetForm);
+
+function resetForm() {
+    // Reset form fields
+    document.getElementById('customerForm').reset();
+
+    // Reset the amount of products to 0
+    products.forEach(product => {
+        product.amount = 0;
+    });
+
+    // Reset the timer and update the countdown
+    remainingTime = 900; // Reset timer to 15 minutes
+    updateCountdown();
+
+    // Update the displayed products and cart
+    printProducts();
+    printCartProducts();
+}
+
 
 /*
 * payment options and order button
@@ -709,6 +731,14 @@ function updateOrderPopupContent(subtotal) {
         tel: document.getElementById('tel').value,
     };
 
+    // calculate shipping cost
+    let shippingCost = 0;
+    if (products.reduce((total, product) => total + product.amount, 0) > 15) {
+        shippingCost = 0;
+    } else {
+        shippingCost = 25;
+    }
+
     // estimated time of delivery
     const now = new Date();
     const deliveryTime = new Date(now.getTime() + 30 * 60000);
@@ -726,6 +756,8 @@ function updateOrderPopupContent(subtotal) {
         ${cartProducts.map(product => `<p>${product.name} - x${product.amount} - ${product.price} SEK</p>`).join('')}
         <h4>Discount code:</h3>
         <p>${discountInput.value} -10 SEK</p>
+        <h3 class="summary-subheadings">Shipping Cost:</h3>
+        <p>${shippingCost.toFixed(2)} SEK</p>
         <h3 class="summary-subheadings">Subtotal:</h3>
         <p>${subtotal} SEK</p>
         <h3 class="summary-subheadings">Estimated Time of Delivery:</h3>
