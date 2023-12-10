@@ -136,8 +136,10 @@ Fields for:
 ![Alt text](images/screencapture-jigsaw-w3-org-css-validator-validator-2023-12-10-23_50_56-2.png)
 
 ### Lighthouse
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Alt text](<images/Skärmavbild 2023-12-10 kl. 23.55.49.png>)
 
 ### Full Website 
+![Alt text](images/screencapture-medieinstitutet-github-io-fed23d-js-grundkurs-webshop-fannyestrom-2023-12-10-23_56_32.png)
+
 
 
