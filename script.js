@@ -648,11 +648,16 @@ function activateOrderButton() {
         } else {
             orderBtn.setAttribute('disabled', 'true');
         }
-    } else if (isCardVisible) {
-        const creditCardNumberValue = creditCardNumberInput.value.trim();
-        const creditCardNumberRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/;
+    } 
+    
+    if (isCardVisible) {
+        const cardNumberValue = creditCardNumberInput.value.trim();
+        const cardYearValue = creditCardYearInput.value.trim();
+        const cardMonthValue = creditCardMonthInput.value.trim();
+        const cardCvcValue = creditCardCvcInput.value.trim();
 
-        if (creditCardNumberRegex.test(creditCardNumberValue)) {
+        // Check if card details are filled (you can add more validation if needed)
+        if (cardNumberValue !== '' && cardYearValue !== '' && cardMonthValue !== '' && cardCvcValue !== '') {
             orderBtn.removeAttribute('disabled');
         } else {
             orderBtn.setAttribute('disabled', 'true');
@@ -672,6 +677,8 @@ function updateRadioAvailability() {
     } else {
         invoiceRadio.removeAttribute('disabled');
     }
+
+    activateOrderButton();
 }
 
 // toggle between payment options
@@ -750,8 +757,9 @@ document.querySelectorAll('.input-container').forEach(container => {
 });
 
 
-
-
+/*
+* display order summary when order button is clicked
+*/
 function displayOrderSummary() {
     console.log('Displaying order summary...');
 
@@ -810,6 +818,7 @@ function updateOrderPopupContent(subtotal) {
         <p>${deliveryTime.toLocaleTimeString()}</p>
     `;
 }
+
 
 
 printProducts(); 
