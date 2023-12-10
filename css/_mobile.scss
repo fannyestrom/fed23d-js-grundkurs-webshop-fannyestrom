@@ -455,6 +455,16 @@ main {
         margin: 5px 0;
     }
 
+    .reset-button {
+        grid-column: 4 / 5;
+        background-color: rgb(255, 192, 227);
+        border: none;
+        border-radius: 8px;
+        padding: 3px 10px;
+
+        cursor: pointer;
+    }
+
     .hidden {
         display: none;
     }

@@ -230,6 +230,10 @@ main {
         grid-column: span 8;
     }
 
+    .reset-button {
+        grid-column: 7 / 9;
+    }
+
     .payment-options {
         grid-column: span 8;
     }
