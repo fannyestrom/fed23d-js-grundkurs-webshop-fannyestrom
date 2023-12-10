@@ -15,6 +15,8 @@ Course: Javascript Basic Course
 ### 🔗 Link to the Github repo
 https://github.com/Medieinstitutet/fed23d-js-grundkurs-webshop-fannyestrom.git
 
+Live website: medieinstitutet.github.io/fed23d-js-grundkurs-webshop-fannyestrom/
+
 
 ## About the author
 
@@ -126,12 +128,12 @@ Fields for:
 ## Screenshots
 
 ### HTML Validation
-![hmtl validation](/Users/fannyestrom/github-classroom/Medieinstitutet/fed23d-js-grundkurs-webshop-fannyestrom/images/screencapture-validator-w3-org-nu-2023-12-10-23_42_20.png)
-
-
-
+![Alt text](images/screencapture-validator-w3-org-nu-2023-12-10-23_42_20.png)
 
 ### CSS Validation 
+![Alt text](images/screencapture-jigsaw-w3-org-css-validator-validator-2023-12-10-23_50_56.png)
+
+![Alt text](images/screencapture-jigsaw-w3-org-css-validator-validator-2023-12-10-23_50_56-2.png)
 
 ### Lighthouse
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
