@@ -35,7 +35,7 @@ header {
         font-size: 2.5rem;
         font-family: 'Arizonia', cursive;
         text-decoration: none;
-        color: rgb(234, 176, 208);
+        color: black;
         position: relative;
         left: 20px;
     }
@@ -520,6 +520,17 @@ main {
             }
         
     }
+}
+
+.customer-form input.error {
+    border: 2px solid red;
+}
+
+.customer-form input.error + .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
 }
 
 

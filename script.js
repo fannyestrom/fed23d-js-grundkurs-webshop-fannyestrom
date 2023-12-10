@@ -487,7 +487,7 @@ function printCartProducts() {
         shippingCost = 0;
     } else {
         // Calculate shipping cost as 25 SEK
-        shippingCost = 25;
+        shippingCost = 25 + 0.1 * discountedSubtotal;
     }
     
     // print shopping cart sum without discounts or surcharge
@@ -704,6 +704,49 @@ document.querySelector('#orderBtn').addEventListener('click', function (event) {
     // Display the order summary
     displayOrderSummary();
 });
+
+
+// Add event listeners for input fields to check for content
+const formInputs = document.querySelectorAll('.customer-form input:not([type="checkbox"])');
+
+formInputs.forEach(input => {
+    input.addEventListener('input', validateInput);
+});
+
+function validateInput(event) {
+    const input = event.target;
+    const inputValue = input.value.trim();
+
+    if (inputValue === '') {
+        // If no text, add red border
+        input.classList.add('error');
+        input.nextElementSibling.innerText = 'Info required';
+    } else {
+        // If there is text, remove error styles
+        input.classList.remove('error');
+        input.nextElementSibling.innerText = '';
+    }
+
+    // Check for overall form validity and enable/disable order button
+    checkFormValidity();
+}
+
+function checkFormValidity() {
+    const form = document.getElementById('customerForm');
+    const isValid = form.checkValidity();
+
+    // Enable/disable order button based on form validity
+    document.getElementById('orderBtn').disabled = !isValid;
+}
+
+// Update HTML to include error message containers
+document.querySelectorAll('.input-container').forEach(container => {
+    const errorMessage = document.createElement('span');
+    errorMessage.classList.add('error-message');
+    container.appendChild(errorMessage);
+});
+
+
 
 
 function displayOrderSummary() {
