@@ -126,6 +126,10 @@ Fields for:
 ## Screenshots
 
 ### HTML Validation
+![hmtl validation](/Users/fannyestrom/github-classroom/Medieinstitutet/fed23d-js-grundkurs-webshop-fannyestrom/images/screencapture-validator-w3-org-nu-2023-12-10-23_42_20.png)
+
+
+
 
 ### CSS Validation 
 
