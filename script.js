@@ -443,7 +443,10 @@ function printCartProducts() {
     originalSubtotal = 0;
 
     // store the total discounted amount for products with quantity >= 10
-    let over10Discount = 0; 
+    let over10Discount = 0;
+
+    // initialize shipping cost
+    let shippingCost = 0;
   
     products.forEach((product) => {
         if (product.amount > 0) {
@@ -477,9 +480,19 @@ function printCartProducts() {
         }
     });
 
+    const discountedSubtotal = originalSubtotal - over10Discount;
+
+     // check if the number of products in the cart is more than 15 for free shipping
+     if (products.reduce((total, product) => total + product.amount, 0) > 15) {
+        shippingCost = 0;
+    } else {
+        // Calculate shipping cost as 25 SEK
+        shippingCost = 25;
+    }
     
     // print shopping cart sum without discounts or surcharge
     shoppingCart.innerHTML += `
+    <p class="shipping-cost">Shipping Cost: ${shippingCost.toFixed(2)} SEK</p>
     <p class="total-sum">Subtotal: ${originalSubtotal - over10Discount} SEK</p>`;
 
 
@@ -527,7 +540,7 @@ function printCartProducts() {
         const dayOfWeek = currentDate.getDay();
         const hour = currentDate.getHours();
         
-        return (dayOfWeek === 5 && hour >= 15) || (dayOfWeek >= 1 && dayOfWeek <= 4) || (dayOfWeek === 0 && hour < 3);
+        return (dayOfWeek === 5 && hour >= 15) || (dayOfWeek === 6) || (dayOfWeek === 0) || (dayOfWeek === 1 && hour < 3);
         
     }
 
