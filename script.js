@@ -307,6 +307,12 @@ function calculateNewSubtotal() {
 function increaseAmount(e) {
     const index = e.currentTarget.dataset.id;
     products[index].amount += 1;
+
+    // check if the amount exceeds 10 to apply 10% discount
+    if (products[index].amount > 10) {
+        const discountedPrice = products[index].price * 0.9;
+        products[index].discountedPrice = discountedPrice;
+    }
   
     // visibility of add to cart popup
     const popup = document.querySelector('#popup');
@@ -435,9 +441,29 @@ function printCartProducts() {
     shoppingCart.innerHTML = '';
 
     originalSubtotal = 0;
+
+    // store the total discounted amount for products with quantity >= 10
+    let over10Discount = 0; 
   
     products.forEach((product) => {
         if (product.amount > 0) {
+            let productPrice = product.price;
+            let over10DiscountText = '';
+            let subtotalText = '';
+
+            if (product.amount >= 10) {
+                // apply 10% discount if amount is 10 or more
+                const productDiscount = product.price * 0.1 * product.amount;
+                productPrice -= productDiscount;
+
+                over10DiscountText = `(10% discount when ordering 10 or more of the same product!)`;
+                subtotalText = `${product.amount} x ${product.price} SEK <br> -${productDiscount} SEK`;
+
+                over10Discount += productDiscount;
+            } else {
+                subtotalText = `${product.amount} x ${product.price}`;
+            }
+
             const productsSubtotal = product.amount * product.price;
             originalSubtotal += productsSubtotal;
     
@@ -445,8 +471,8 @@ function printCartProducts() {
             // shopping cart content and how it displays on the website
             shoppingCart.innerHTML += `
             <article class="cart-summary">
-                <span>${product.name}</span> | <span>x${product.amount}</span> | 
-                <span>${productsSubtotal} SEK</span>
+                <span>${product.name}</span> | ${subtotalText}
+                <span>${over10DiscountText}</span>
             </article>`;
         }
     });
@@ -454,7 +480,8 @@ function printCartProducts() {
     
     // print shopping cart sum without discounts or surcharge
     shoppingCart.innerHTML += `
-    <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
+    <p class="total-sum">Subtotal: ${originalSubtotal - over10Discount} SEK</p>`;
+
 
     updateRadioAvailability();
     
