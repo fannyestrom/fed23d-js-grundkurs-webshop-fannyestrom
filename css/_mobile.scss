@@ -495,15 +495,19 @@ main {
             width: 80px;
         }
         
-          .card, .invoice {
-            label {
-              display: flex;
-              gap: 8px;
-              margin-block: 8px;
-              align-items: center;
-              justify-content: space-between;
+            .card, .invoice {
+                label {
+                    display: flex;
+                    gap: 8px;
+                    margin-block: 8px;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             }
-          }
+
+            .invoice {
+                display: none;
+            }
         
     }
 }

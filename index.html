@@ -152,16 +152,16 @@
             <div class="payment-options">
                 <div class="selector">
                   <label>
-                    <input type="radio" name="payment-option" value="invoice">
+                    <input type="radio" name="payment-option" value="invoice" id="invoiceRadio">
                     <span>Invoice</span>
                   </label>
                   <label>
-                    <input type="radio" name="payment-option" value="card" checked>
+                    <input type="radio" name="payment-option" value="card" checked id="cardRadio">
                     <span>Card</span>
                   </label>
                 </div>
               
-                <div class="invoice hidden" id="invoice">
+                <div class="invoice" id="invoice">
                   <label>
                     <span>Personal security number</span>
                     <input class="payment-input" type="text" name="personal-id" id="personalID" value="19980422-1234">
@@ -176,7 +176,9 @@
                   <label>
                     <span>Date</span>
                     <span>
-                        <input class="payment-input" type="number" class="small" placeholder="YY" id="creditCardYear">/<input type="number" class="small" placeholder="MM" id="creditCardMonth">
+                        <input class="payment-input small" type="number" class="small" placeholder="YY" id="creditCardYear">
+                        /
+                        <input type="number" class="payment-input small" placeholder="MM" id="creditCardMonth">
                       </span>
                   </label>
                   <label>

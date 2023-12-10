@@ -283,8 +283,25 @@ function decreaseAmount(e) {
     } else {
         products[index].amount -= 1;
     }
+
     printProducts();
     printCartProducts();
+
+    // check if the subtotal is under 800 again and enable the invoice radio button
+    if (calculateNewSubtotal() < 800) {
+        invoiceRadio.removeAttribute('disabled');
+    }
+}
+
+// Add this function to calculate the new subtotal after decreasing the amount
+function calculateNewSubtotal() {
+    let newSubtotal = 0;
+
+    products.forEach((product) => {
+        newSubtotal += product.amount * product.price;
+    });
+
+    return newSubtotal;
 }
 
 function increaseAmount(e) {
@@ -302,6 +319,8 @@ function increaseAmount(e) {
   
     // start or reset the timer when the increase button is clicked
     startTimer();
+
+    updateRadioAvailability();
 
     printProducts();
     printCartProducts();
@@ -419,14 +438,15 @@ function printCartProducts() {
   
     products.forEach((product) => {
         if (product.amount > 0) {
-            const addedProductsSubtotal = product.amount * product.price;
-            originalSubtotal += addedProductsSubtotal;
+            const productsSubtotal = product.amount * product.price;
+            originalSubtotal += productsSubtotal;
+    
 
             // shopping cart content and how it displays on the website
             shoppingCart.innerHTML += `
             <article class="cart-summary">
                 <span>${product.name}</span> | <span>x${product.amount}</span> | 
-                <span>${addedProductsSubtotal} SEK</span>
+                <span>${productsSubtotal} SEK</span>
             </article>`;
         }
     });
@@ -435,6 +455,8 @@ function printCartProducts() {
     // print shopping cart sum without discounts or surcharge
     shoppingCart.innerHTML += `
     <p class="total-sum">Subtotal: ${originalSubtotal} SEK</p>`;
+
+    updateRadioAvailability();
     
 
     // check if it's Monday between 3 AM and 10 AM
@@ -534,94 +556,80 @@ function printCartProducts() {
 
 
 /*
-* payment options
+* payment options and order button
 */
-const cardInvoiceRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
-const inputs = [
-  document.querySelector('#creditCardNumber'),
-  document.querySelector('#creditCardYear'),
-  document.querySelector('#creditCardMonth'),
-  document.querySelector('#creditCardCvc'),
-  document.querySelector('#personalID')
-];
+// variables needed
+const invoiceRadio = document.getElementById('invoiceRadio');
+const cardRadio = document.getElementById('cardRadio');
+const invoiceSection = document.getElementById('invoice');
+const cardSection = document.getElementById('card');
+const personalIDInput = document.getElementById('personalID');
+const creditCardNumberInput = document.getElementById('creditCardNumber');
+const creditCardYearInput = document.getElementById('creditCardYear');
+const creditCardMonthInput = document.getElementById('creditCardMonth');
+const creditCardCvcInput = document.getElementById('creditCardCvc');
+const orderBtn = document.getElementById('orderBtn');
 
-const invoiceOption = document.querySelector('#invoice');
-const cardOption = document.querySelector('#card');
-const orderBtn = document.querySelector('#orderBtn');
-
-// default options
-let selectedPaymentOption = 'card';
-
-// REGEX
-const personalIdRegEx = new RegExp(/^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/);
-const creditCardNumberRegEx = new RegExp(/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/); // MasterCard
-
-// add event listeners
-inputs.forEach(input => {
-  input.addEventListener('focusout', activateOrderButton);
-  input.addEventListener('change', activateOrderButton);
-});
-
-cardInvoiceRadios.forEach(radioBtn => {
-  radioBtn.addEventListener('change', switchPaymentMethod);
-});
-
-/*
- * switches between invoice payment method and
- * card payment method. toggles visibility.
- */
-function switchPaymentMethod(e) {
-  invoiceOption.classList.toggle('hidden');
-  cardOption.classList.toggle('hidden');
-
-  selectedPaymentOption = e.target.value;
-}
-
-function isPersonalIdNumberValid() {
-  return personalIdRegEx.exec(personalId.value);
-}
-
-/*
- * activate order button if all fields are correctly filled.
- */
+// make the order button active
 function activateOrderButton() {
-  orderBtn.setAttribute('disabled', '');
+    const isInvoiceVisible = invoiceSection.style.display === 'block';
+    const isCardVisible = cardSection.style.display === 'block';
 
-  
+    if (isInvoiceVisible) {
+        const personalIDValue = personalIDInput.value.trim();
+        const personalIDRegex = /^(\d{6}[-+]?|\d{8}-?)\s?\d{4}$/;
 
-  if (selectedPaymentOption === 'invoice' && !isPersonalIdNumberValid()) {
-    return;
-  }
-  
-  if (selectedPaymentOption === 'card') {
-    // check card number
-    if (creditCardNumberRegEx.exec(creditCardNumber.value) === null) {
-      console.warn('Credit card number not valid.');
-      return;
+        if (personalIDRegex.test(personalIDValue)) {
+            orderBtn.removeAttribute('disabled');
+        } else {
+            orderBtn.setAttribute('disabled', 'true');
+        }
+    } else if (isCardVisible) {
+        const creditCardNumberValue = creditCardNumberInput.value.trim();
+        const creditCardNumberRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/;
+
+        if (creditCardNumberRegex.test(creditCardNumberValue)) {
+            orderBtn.removeAttribute('disabled');
+        } else {
+            orderBtn.setAttribute('disabled', 'true');
+        }
     }
-
-    // check card year
-    let year = Number(creditCardYear.value);
-    const today = new Date();
-    const shortYear = Number(String(today.getFullYear()).substring(2));
-
-    if (year > shortYear + 2 || year < shortYear) {
-      console.warn('Credit card year not valid.');
-      return;
-    }
-
-    // month, "padStart" med 0
-    
-    // check card CVC
-    if (creditCardCvc.value.length !== 3) {
-      console.warn('CVC not valid.');
-      return;
-    }
-  }
-
-  orderBtn.removeAttribute('disabled');
 }
 
+// invoice payment option not available when order is over 800 SEK
+function updateRadioAvailability() {
+
+    if (originalSubtotal > 800) {
+        invoiceRadio.setAttribute('disabled', 'true');
+        cardRadio.checked = true;
+        invoiceSection.style.display = 'none';
+        cardSection.style.display = 'block';
+    } else {
+        invoiceRadio.removeAttribute('disabled');
+    }
+}
+
+// toggle between payment options
+invoiceRadio.addEventListener('change', () => {
+  invoiceSection.style.display = invoiceRadio.checked ? 'block' : 'none';
+  cardSection.style.display = cardRadio.checked ? 'block' : 'none';
+  activateOrderButton();
+});
+
+cardRadio.addEventListener('change', () => {
+  cardSection.style.display = cardRadio.checked ? 'block' : 'none';
+  invoiceSection.style.display = invoiceRadio.checked ? 'block' : 'none';
+  activateOrderButton();
+});
+
+
+personalIDInput.addEventListener('input', activateOrderButton);
+creditCardNumberInput.addEventListener('input', activateOrderButton);
+creditCardYearInput.addEventListener('input', activateOrderButton);
+creditCardMonthInput.addEventListener('input', activateOrderButton);
+creditCardCvcInput.addEventListener('input', activateOrderButton);
+
+updateRadioAvailability();
 
 /*
 * order summary popup
